@@ -1,0 +1,1020 @@
+{
+  "metadata": {
+    "total_colors": 53,
+    "last_updated": "2025-07-14T15:43:55.400836",
+    "brands": {
+      "レザック66": 8,
+      "レザック80つむぎ": 32,
+      "レザック82ろうけつ": 13
+    }
+  },
+  "colors": [
+    {
+      "id": "official_0",
+      "name": "レザック66うすみどり",
+      "brand": "レザック66",
+      "weight": "135kg",
+      "size": "636×939mm",
+      "official_image": "レザック66うすみどり.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック66うすみどり.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400694",
+      "average_color": {
+        "rgb": [
+          221,
+          240,
+          217
+        ],
+        "hex": "#ddf0d9"
+      }
+    },
+    {
+      "id": "official_1",
+      "name": "レザック66うすむらさき",
+      "brand": "レザック66",
+      "weight": "135kg",
+      "size": "636×939mm",
+      "official_image": "レザック66うすむらさき.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック66うすむらさき.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400731",
+      "average_color": {
+        "rgb": [
+          239,
+          224,
+          231
+        ],
+        "hex": "#efe0e7"
+      }
+    },
+    {
+      "id": "official_2",
+      "name": "レザック66ダークグレイ",
+      "brand": "レザック66",
+      "weight": "135kg",
+      "size": "636×939mm",
+      "official_image": "レザック66ダークグレイ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック66ダークグレイ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400735",
+      "average_color": {
+        "rgb": [
+          95,
+          98,
+          101
+        ],
+        "hex": "#5f6265"
+      }
+    },
+    {
+      "id": "official_3",
+      "name": "レザック66ホワイトグレイ",
+      "brand": "レザック66",
+      "weight": "135kg",
+      "size": "636×939mm",
+      "official_image": "レザック66ホワイトグレイ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック66ホワイトグレイ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400737",
+      "average_color": {
+        "rgb": [
+          233,
+          230,
+          223
+        ],
+        "hex": "#e9e6df"
+      }
+    },
+    {
+      "id": "official_4",
+      "name": "レザック66ライトグリーン",
+      "brand": "レザック66",
+      "weight": "135kg",
+      "size": "636×939mm",
+      "official_image": "レザック66ライトグリーン.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック66ライトグリーン.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400743",
+      "average_color": {
+        "rgb": [
+          139,
+          229,
+          113
+        ],
+        "hex": "#8be571"
+      }
+    },
+    {
+      "id": "official_5",
+      "name": "レザック66ライトグレイ",
+      "brand": "レザック66",
+      "weight": "135kg",
+      "size": "636×939mm",
+      "official_image": "レザック66ライトグレイ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック66ライトグレイ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400745",
+      "average_color": {
+        "rgb": [
+          212,
+          212,
+          212
+        ],
+        "hex": "#d4d4d4"
+      }
+    },
+    {
+      "id": "official_6",
+      "name": "レザック66レモン",
+      "brand": "レザック66",
+      "weight": "135kg",
+      "size": "636×939mm",
+      "official_image": "レザック66レモン.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック66レモン.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400749",
+      "average_color": {
+        "rgb": [
+          247,
+          243,
+          91
+        ],
+        "hex": "#f7f35b"
+      }
+    },
+    {
+      "id": "official_7",
+      "name": "レザック66らくだ",
+      "brand": "レザック66",
+      "weight": "135kg",
+      "size": "636×939mm",
+      "official_image": "レザック66らくだ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック66らくだ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400751",
+      "average_color": {
+        "rgb": [
+          203,
+          163,
+          120
+        ],
+        "hex": "#cba378"
+      }
+    },
+    {
+      "id": "official_8",
+      "name": "レザック80つむぎんねず",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎんねず.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎんねず.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400753",
+      "average_color": {
+        "rgb": [
+          208,
+          200,
+          199
+        ],
+        "hex": "#d0c8c7"
+      }
+    },
+    {
+      "id": "official_9",
+      "name": "レザック80つむぎあい",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎあい.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎあい.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400755",
+      "average_color": {
+        "rgb": [
+          107,
+          145,
+          177
+        ],
+        "hex": "#6b91b1"
+      }
+    },
+    {
+      "id": "official_10",
+      "name": "レザック80つむぎあお",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎあお.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎあお.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400758",
+      "average_color": {
+        "rgb": [
+          132,
+          158,
+          198
+        ],
+        "hex": "#849ec6"
+      }
+    },
+    {
+      "id": "official_11",
+      "name": "レザック80つむぎあおねず",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎあおねず.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎあおねず.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400760",
+      "average_color": {
+        "rgb": [
+          161,
+          164,
+          171
+        ],
+        "hex": "#a1a4ab"
+      }
+    },
+    {
+      "id": "official_12",
+      "name": "レザック80つむぎあさぎ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎあさぎ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎあさぎ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400761",
+      "average_color": {
+        "rgb": [
+          142,
+          200,
+          203
+        ],
+        "hex": "#8ec8cb"
+      }
+    },
+    {
+      "id": "official_13",
+      "name": "レザック80つむぎうすずみ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎうすずみ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎうすずみ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400763",
+      "average_color": {
+        "rgb": [
+          225,
+          216,
+          207
+        ],
+        "hex": "#e1d8cf"
+      }
+    },
+    {
+      "id": "official_14",
+      "name": "レザック80つむぎうめ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎうめ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎうめ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400765",
+      "average_color": {
+        "rgb": [
+          227,
+          187,
+          194
+        ],
+        "hex": "#e3bbc2"
+      }
+    },
+    {
+      "id": "official_15",
+      "name": "レザック80つむぎきいろ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎきいろ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎきいろ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400766",
+      "average_color": {
+        "rgb": [
+          224,
+          191,
+          89
+        ],
+        "hex": "#e0bf59"
+      }
+    },
+    {
+      "id": "official_16",
+      "name": "レザック80つむぎきぬ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎきぬ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎきぬ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400769",
+      "average_color": {
+        "rgb": [
+          246,
+          240,
+          212
+        ],
+        "hex": "#f6f0d4"
+      }
+    },
+    {
+      "id": "official_17",
+      "name": "レザック80つむぎきんちゃ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎきんちゃ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎきんちゃ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400771",
+      "average_color": {
+        "rgb": [
+          233,
+          179,
+          84
+        ],
+        "hex": "#e9b354"
+      }
+    },
+    {
+      "id": "official_18",
+      "name": "レザック80つむぎくちば",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎくちば.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎくちば.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400773",
+      "average_color": {
+        "rgb": [
+          104,
+          87,
+          71
+        ],
+        "hex": "#685747"
+      }
+    },
+    {
+      "id": "official_19",
+      "name": "レザック80つむぎくり",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎくり.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎくり.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400774",
+      "average_color": {
+        "rgb": [
+          167,
+          110,
+          75
+        ],
+        "hex": "#a76e4b"
+      }
+    },
+    {
+      "id": "official_20",
+      "name": "レザック80つむぎこうぞ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎこうぞ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎこうぞ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400776",
+      "average_color": {
+        "rgb": [
+          230,
+          210,
+          179
+        ],
+        "hex": "#e6d2b3"
+      }
+    },
+    {
+      "id": "official_21",
+      "name": "レザック80つむぎこけ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎこけ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎこけ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400777",
+      "average_color": {
+        "rgb": [
+          143,
+          144,
+          87
+        ],
+        "hex": "#8f9057"
+      }
+    },
+    {
+      "id": "official_22",
+      "name": "レザック80つむぎこそめ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎこそめ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎこそめ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400779",
+      "average_color": {
+        "rgb": [
+          226,
+          197,
+          157
+        ],
+        "hex": "#e2c59d"
+      }
+    },
+    {
+      "id": "official_23",
+      "name": "レザック80つむぎしらちゃ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎしらちゃ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎしらちゃ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400781",
+      "average_color": {
+        "rgb": [
+          213,
+          176,
+          145
+        ],
+        "hex": "#d5b091"
+      }
+    },
+    {
+      "id": "official_24",
+      "name": "レザック80つむぎすいせん",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎすいせん.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎすいせん.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400784",
+      "average_color": {
+        "rgb": [
+          241,
+          224,
+          135
+        ],
+        "hex": "#f1e087"
+      }
+    },
+    {
+      "id": "official_25",
+      "name": "レザック80つむぎすみ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎすみ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎすみ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400785",
+      "average_color": {
+        "rgb": [
+          78,
+          73,
+          64
+        ],
+        "hex": "#4e4940"
+      }
+    },
+    {
+      "id": "official_26",
+      "name": "レザック80つむぎそら",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎそら.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎそら.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400787",
+      "average_color": {
+        "rgb": [
+          50,
+          179,
+          202
+        ],
+        "hex": "#32b3ca"
+      }
+    },
+    {
+      "id": "official_27",
+      "name": "レザック80つむぎつゆくさ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎつゆくさ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎつゆくさ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400789",
+      "average_color": {
+        "rgb": [
+          53,
+          141,
+          191
+        ],
+        "hex": "#358dbf"
+      }
+    },
+    {
+      "id": "official_28",
+      "name": "レザック80つむぎはだ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎはだ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎはだ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400790",
+      "average_color": {
+        "rgb": [
+          246,
+          221,
+          170
+        ],
+        "hex": "#f6ddaa"
+      }
+    },
+    {
+      "id": "official_29",
+      "name": "レザック80つむぎひすい",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎひすい.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎひすい.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400792",
+      "average_color": {
+        "rgb": [
+          11,
+          191,
+          177
+        ],
+        "hex": "#0bbfb1"
+      }
+    },
+    {
+      "id": "official_30",
+      "name": "レザック80つむぎふじ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎふじ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎふじ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400793",
+      "average_color": {
+        "rgb": [
+          151,
+          146,
+          163
+        ],
+        "hex": "#9792a3"
+      }
+    },
+    {
+      "id": "official_31",
+      "name": "レザック80つむぎべに",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎべに.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎべに.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400795",
+      "average_color": {
+        "rgb": [
+          184,
+          38,
+          53
+        ],
+        "hex": "#b82635"
+      }
+    },
+    {
+      "id": "official_32",
+      "name": "レザック80つむぎほのお",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎほのお.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎほのお.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400797",
+      "average_color": {
+        "rgb": [
+          225,
+          77,
+          58
+        ],
+        "hex": "#e14d3a"
+      }
+    },
+    {
+      "id": "official_33",
+      "name": "レザック80つむぎみどり",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎみどり.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎみどり.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400798",
+      "average_color": {
+        "rgb": [
+          123,
+          151,
+          101
+        ],
+        "hex": "#7b9765"
+      }
+    },
+    {
+      "id": "official_34",
+      "name": "レザック80つむぎむらさき",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎむらさき.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎむらさき.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400800",
+      "average_color": {
+        "rgb": [
+          152,
+          99,
+          149
+        ],
+        "hex": "#986395"
+      }
+    },
+    {
+      "id": "official_35",
+      "name": "レザック80つむぎもえぎ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎもえぎ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎもえぎ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400802",
+      "average_color": {
+        "rgb": [
+          230,
+          216,
+          132
+        ],
+        "hex": "#e6d884"
+      }
+    },
+    {
+      "id": "official_36",
+      "name": "レザック80つむぎもも",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎもも.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎもも.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400803",
+      "average_color": {
+        "rgb": [
+          245,
+          212,
+          197
+        ],
+        "hex": "#f5d4c5"
+      }
+    },
+    {
+      "id": "official_37",
+      "name": "レザック80つむぎよもぎ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎよもぎ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎよもぎ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400805",
+      "average_color": {
+        "rgb": [
+          181,
+          216,
+          156
+        ],
+        "hex": "#b5d89c"
+      }
+    },
+    {
+      "id": "official_38",
+      "name": "レザック80つむぎらくだ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎらくだ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎらくだ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400808",
+      "average_color": {
+        "rgb": [
+          213,
+          175,
+          133
+        ],
+        "hex": "#d5af85"
+      }
+    },
+    {
+      "id": "official_39",
+      "name": "レザック80つむぎわかくさ",
+      "brand": "レザック80つむぎ",
+      "weight": "80kg",
+      "size": "636×939mm",
+      "official_image": "レザック80つむぎわかくさ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック80つむぎわかくさ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400811",
+      "average_color": {
+        "rgb": [
+          160,
+          210,
+          180
+        ],
+        "hex": "#a0d2b4"
+      }
+    },
+    {
+      "id": "official_40",
+      "name": "レザック82ろうけつあい",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつあい.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつあい.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400813",
+      "average_color": {
+        "rgb": [
+          75,
+          112,
+          176
+        ],
+        "hex": "#4b70b0"
+      }
+    },
+    {
+      "id": "official_41",
+      "name": "レザック82ろうけつあさぎ",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつあさぎ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつあさぎ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400815",
+      "average_color": {
+        "rgb": [
+          153,
+          206,
+          195
+        ],
+        "hex": "#99cec3"
+      }
+    },
+    {
+      "id": "official_42",
+      "name": "レザック82ろうけつこがね",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつこがね.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつこがね.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400817",
+      "average_color": {
+        "rgb": [
+          241,
+          189,
+          79
+        ],
+        "hex": "#f1bd4f"
+      }
+    },
+    {
+      "id": "official_43",
+      "name": "レザック82ろうけつこそめ",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつこそめ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつこそめ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400820",
+      "average_color": {
+        "rgb": [
+          208,
+          185,
+          131
+        ],
+        "hex": "#d0b983"
+      }
+    },
+    {
+      "id": "official_44",
+      "name": "レザック82ろうけつしゅ",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつしゅ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつしゅ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400821",
+      "average_color": {
+        "rgb": [
+          225,
+          75,
+          53
+        ],
+        "hex": "#e14b35"
+      }
+    },
+    {
+      "id": "official_45",
+      "name": "レザック82ろうけつしらちゃ",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつしらちゃ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつしらちゃ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400823",
+      "average_color": {
+        "rgb": [
+          195,
+          144,
+          109
+        ],
+        "hex": "#c3906d"
+      }
+    },
+    {
+      "id": "official_46",
+      "name": "レザック82ろうけつしろ",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつしろ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつしろ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400825",
+      "average_color": {
+        "rgb": [
+          239,
+          235,
+          228
+        ],
+        "hex": "#efebe4"
+      }
+    },
+    {
+      "id": "official_47",
+      "name": "レザック82ろうけつすみ",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつすみ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつすみ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400826",
+      "average_color": {
+        "rgb": [
+          91,
+          97,
+          84
+        ],
+        "hex": "#5b6154"
+      }
+    },
+    {
+      "id": "official_48",
+      "name": "レザック82ろうけつぞうげ",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつぞうげ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつぞうげ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400828",
+      "average_color": {
+        "rgb": [
+          243,
+          231,
+          207
+        ],
+        "hex": "#f3e7cf"
+      }
+    },
+    {
+      "id": "official_49",
+      "name": "レザック82ろうけつねずみ",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつねずみ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつねずみ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400829",
+      "average_color": {
+        "rgb": [
+          161,
+          143,
+          130
+        ],
+        "hex": "#a18f82"
+      }
+    },
+    {
+      "id": "official_50",
+      "name": "レザック82ろうけつはだ",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつはだ.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつはだ.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400831",
+      "average_color": {
+        "rgb": [
+          241,
+          218,
+          180
+        ],
+        "hex": "#f1dab4"
+      }
+    },
+    {
+      "id": "official_51",
+      "name": "レザック82ろうけつみず",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつみず.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつみず.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400832",
+      "average_color": {
+        "rgb": [
+          136,
+          176,
+          192
+        ],
+        "hex": "#88b0c0"
+      }
+    },
+    {
+      "id": "official_52",
+      "name": "レザック82ろうけつみどり",
+      "brand": "レザック82ろうけつ",
+      "weight": "82kg",
+      "size": "636×939mm",
+      "official_image": "レザック82ろうけつみどり.png",
+      "local_image_url": "http://localhost:5000/official_images/レザック82ろうけつみどり.png",
+      "is_official": true,
+      "scraped_at": "2025-07-14T15:43:55.400834",
+      "average_color": {
+        "rgb": [
+          129,
+          151,
+          88
+        ],
+        "hex": "#819758"
+      }
+    }
+  ]
+}

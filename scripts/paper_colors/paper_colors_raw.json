@@ -1,0 +1,1202 @@
+[
+  {
+    "id": "364cf005",
+    "name": "玉子",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234428t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234428.htm",
+    "image_file": "a12b6ed60c787fbb77837265abfb5406.jpg",
+    "average_color": {
+      "rgb": [
+        241,
+        239,
+        222
+      ],
+      "hex": "#f1efde"
+    },
+    "scraped_at": "2025-07-14T13:38:35.701120",
+    "page_title": ""
+  },
+  {
+    "id": "dd9fb27a",
+    "name": "クリーム",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2342e8t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2342e8.htm",
+    "image_file": "93d4ec59c2fff28334644e1afb42c5d0.jpg",
+    "average_color": {
+      "rgb": [
+        241,
+        236,
+        223
+      ],
+      "hex": "#f1ecdf"
+    },
+    "scraped_at": "2025-07-14T13:38:36.727999",
+    "page_title": ""
+  },
+  {
+    "id": "b72a29da",
+    "name": "ミルク",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2345a8t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2345a8.htm",
+    "image_file": "e2cbfe4746c19211e6abe9dcd80c0da4.jpg",
+    "average_color": {
+      "rgb": [
+        237,
+        234,
+        225
+      ],
+      "hex": "#edeae1"
+    },
+    "scraped_at": "2025-07-14T13:38:37.754221",
+    "page_title": ""
+  },
+  {
+    "id": "4a8c5aa4",
+    "name": "桜",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23435et.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23435e.htm",
+    "image_file": "9637f1ef613080ec03269c3c8e9266eb.jpg",
+    "average_color": {
+      "rgb": [
+        236,
+        230,
+        225
+      ],
+      "hex": "#ece6e1"
+    },
+    "scraped_at": "2025-07-14T13:38:38.779624",
+    "page_title": ""
+  },
+  {
+    "id": "9e247427",
+    "name": "淡紫",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23424ct.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23424c.htm",
+    "image_file": "cb07f158b50d0968d8f79bb8bb63efd8.jpg",
+    "average_color": {
+      "rgb": [
+        232,
+        226,
+        229
+      ],
+      "hex": "#e8e2e5"
+    },
+    "scraped_at": "2025-07-14T13:38:39.807519",
+    "page_title": ""
+  },
+  {
+    "id": "1da90d44",
+    "name": "淡藍",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23422ct.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23422c.htm",
+    "image_file": "52b5b8d245070bab5e5990074bd38da7.jpg",
+    "average_color": {
+      "rgb": [
+        228,
+        225,
+        229
+      ],
+      "hex": "#e4e1e5"
+    },
+    "scraped_at": "2025-07-14T13:38:40.834643",
+    "page_title": ""
+  },
+  {
+    "id": "78bc7e18",
+    "name": "水色",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23459ct.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23459c.htm",
+    "image_file": "51432524115b4a99d91891964527df54.jpg",
+    "average_color": {
+      "rgb": [
+        235,
+        237,
+        240
+      ],
+      "hex": "#ebedf0"
+    },
+    "scraped_at": "2025-07-14T13:38:41.863815",
+    "page_title": ""
+  },
+  {
+    "id": "0c8f4aaa",
+    "name": "浅黄",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2341ebt.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2341eb.htm",
+    "image_file": "19140a5a33cd6dd99519e796b6df2344.jpg",
+    "average_color": {
+      "rgb": [
+        222,
+        230,
+        229
+      ],
+      "hex": "#dee6e5"
+    },
+    "scraped_at": "2025-07-14T13:38:42.894943",
+    "page_title": ""
+  },
+  {
+    "id": "4eaf4841",
+    "name": "淡緑",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23424bt.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23424b.htm",
+    "image_file": "21af7843392d3a61c08cf112c21d6724.jpg",
+    "average_color": {
+      "rgb": [
+        222,
+        230,
+        221
+      ],
+      "hex": "#dee6dd"
+    },
+    "scraped_at": "2025-07-14T13:38:43.935371",
+    "page_title": ""
+  },
+  {
+    "id": "e6b8e96a",
+    "name": "象牙",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23441ft.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23441f.htm",
+    "image_file": "23cf5ff0072ed9eadff82600cf37e675.jpg",
+    "average_color": {
+      "rgb": [
+        229,
+        221,
+        201
+      ],
+      "hex": "#e5ddc9"
+    },
+    "scraped_at": "2025-07-14T13:38:44.962145",
+    "page_title": ""
+  },
+  {
+    "id": "8f605042",
+    "name": "オークル",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234266t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234266.htm",
+    "image_file": "0e21243e330adc04aa606140235058d7.jpg",
+    "average_color": {
+      "rgb": [
+        228,
+        213,
+        193
+      ],
+      "hex": "#e4d5c1"
+    },
+    "scraped_at": "2025-07-14T13:38:45.995566",
+    "page_title": ""
+  },
+  {
+    "id": "792bc286",
+    "name": "ベージュ",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234537t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234537.htm",
+    "image_file": "790716ed9d1606358f43f188ad25f749.jpg",
+    "average_color": {
+      "rgb": [
+        224,
+        210,
+        204
+      ],
+      "hex": "#e0d2cc"
+    },
+    "scraped_at": "2025-07-14T13:38:47.022613",
+    "page_title": ""
+  },
+  {
+    "id": "432c7765",
+    "name": "桃",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2345bbt.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2345bb.htm",
+    "image_file": "bf09dc01893718ead52afa802be71924.jpg",
+    "average_color": {
+      "rgb": [
+        229,
+        212,
+        214
+      ],
+      "hex": "#e5d4d6"
+    },
+    "scraped_at": "2025-07-14T13:38:48.050931",
+    "page_title": ""
+  },
+  {
+    "id": "ee5b790c",
+    "name": "ピンク",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2344eft.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2344ef.htm",
+    "image_file": "50403ac6fdc1be29fd5b142266307655.jpg",
+    "average_color": {
+      "rgb": [
+        226,
+        209,
+        220
+      ],
+      "hex": "#e2d1dc"
+    },
+    "scraped_at": "2025-07-14T13:38:49.076756",
+    "page_title": ""
+  },
+  {
+    "id": "22f213b1",
+    "name": "スミレ",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234402t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234402.htm",
+    "image_file": "a11b152025c77fb1dc6097eb59ebb2b8.jpg",
+    "average_color": {
+      "rgb": [
+        216,
+        207,
+        220
+      ],
+      "hex": "#d8cfdc"
+    },
+    "scraped_at": "2025-07-14T13:38:50.103807",
+    "page_title": ""
+  },
+  {
+    "id": "7b879ade",
+    "name": "藤",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2344f8t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2344f8.htm",
+    "image_file": "5e08c42df17ef6efd8371f67cebeec77.jpg",
+    "average_color": {
+      "rgb": [
+        202,
+        206,
+        222
+      ],
+      "hex": "#cacede"
+    },
+    "scraped_at": "2025-07-14T13:38:51.130053",
+    "page_title": ""
+  },
+  {
+    "id": "440eb2f0",
+    "name": "青鼠",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2341d3t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2341d3.htm",
+    "image_file": "cef1960a630067e26ecaf61d2217ebbd.jpg",
+    "average_color": {
+      "rgb": [
+        207,
+        212,
+        221
+      ],
+      "hex": "#cfd4dd"
+    },
+    "scraped_at": "2025-07-14T13:38:52.155739",
+    "page_title": ""
+  },
+  {
+    "id": "ddb87455",
+    "name": "スカイ",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2343cet.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2343ce.htm",
+    "image_file": "8f1249870537e35a955f0abf916c560e.jpg",
+    "average_color": {
+      "rgb": [
+        206,
+        222,
+        226
+      ],
+      "hex": "#cedee2"
+    },
+    "scraped_at": "2025-07-14T13:38:53.182494",
+    "page_title": ""
+  },
+  {
+    "id": "0c7076d1",
+    "name": "ミント",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2345a9t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2345a9.htm",
+    "image_file": "a8ff2829ce31522f002c6372aec4339d.jpg",
+    "average_color": {
+      "rgb": [
+        205,
+        218,
+        208
+      ],
+      "hex": "#cddad0"
+    },
+    "scraped_at": "2025-07-14T13:38:54.208166",
+    "page_title": ""
+  },
+  {
+    "id": "60fdc37c",
+    "name": "アボガド",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2341fdt.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2341fd.htm",
+    "image_file": "3675aa666acd8a7e23c6f88025e6a8a7.jpg",
+    "average_color": {
+      "rgb": [
+        212,
+        220,
+        199
+      ],
+      "hex": "#d4dcc7"
+    },
+    "scraped_at": "2025-07-14T13:38:55.234999",
+    "page_title": ""
+  },
+  {
+    "id": "de1aaa29",
+    "name": "カラシ",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23428et.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23428e.htm",
+    "image_file": "3d00ffe63d93cc39819299d498d29dfb.jpg",
+    "average_color": {
+      "rgb": [
+        219,
+        215,
+        190
+      ],
+      "hex": "#dbd7be"
+    },
+    "scraped_at": "2025-07-14T13:38:56.262209",
+    "page_title": ""
+  },
+  {
+    "id": "ca35ee38",
+    "name": "レモン",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2345f6t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2345f6.htm",
+    "image_file": "7b4b3bee01fb5c41f5a8e0da2e96aaa1.jpg",
+    "average_color": {
+      "rgb": [
+        237,
+        234,
+        189
+      ],
+      "hex": "#edeabd"
+    },
+    "scraped_at": "2025-07-14T13:38:57.288982",
+    "page_title": ""
+  },
+  {
+    "id": "ddb86dd3",
+    "name": "黄色",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2342a1t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2342a1.htm",
+    "image_file": "b073f6de7dcbfa0d3faf39cbf58547cc.jpg",
+    "average_color": {
+      "rgb": [
+        233,
+        226,
+        171
+      ],
+      "hex": "#e9e2ab"
+    },
+    "scraped_at": "2025-07-14T13:38:58.316064",
+    "page_title": ""
+  },
+  {
+    "id": "b990b42b",
+    "name": "橙",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234432t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234432.htm",
+    "image_file": "8dd919b4d4953f5e3fec181db8a46d08.jpg",
+    "average_color": {
+      "rgb": [
+        222,
+        195,
+        160
+      ],
+      "hex": "#dec3a0"
+    },
+    "scraped_at": "2025-07-14T13:38:59.350921",
+    "page_title": ""
+  },
+  {
+    "id": "489378dc",
+    "name": "赤",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2341d8t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2341d8.htm",
+    "image_file": "7d2cea39f60de747487e094e043c099f.jpg",
+    "average_color": {
+      "rgb": [
+        227,
+        179,
+        177
+      ],
+      "hex": "#e3b3b1"
+    },
+    "scraped_at": "2025-07-14T13:39:00.377440",
+    "page_title": ""
+  },
+  {
+    "id": "34e66c72",
+    "name": "紫",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2345b0t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2345b0.htm",
+    "image_file": "4f746fdeb18a8924192a262609ab2045.jpg",
+    "average_color": {
+      "rgb": [
+        195,
+        185,
+        204
+      ],
+      "hex": "#c3b9cc"
+    },
+    "scraped_at": "2025-07-14T13:39:01.404018",
+    "page_title": ""
+  },
+  {
+    "id": "3c430486",
+    "name": "マリン",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23458ct.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23458c.htm",
+    "image_file": "0d427e0f09a3805ca0a04b4b5b85bbd1.jpg",
+    "average_color": {
+      "rgb": [
+        180,
+        194,
+        217
+      ],
+      "hex": "#b4c2d9"
+    },
+    "scraped_at": "2025-07-14T13:39:02.431558",
+    "page_title": ""
+  },
+  {
+    "id": "2298666c",
+    "name": "青竹",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2341d1t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2341d1.htm",
+    "image_file": "c6398ff8e40853891c07f1ba31df816e.jpg",
+    "average_color": {
+      "rgb": [
+        188,
+        210,
+        222
+      ],
+      "hex": "#bcd2de"
+    },
+    "scraped_at": "2025-07-14T13:39:03.458208",
+    "page_title": ""
+  },
+  {
+    "id": "49b113ff",
+    "name": "グリーン",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234301t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234301.htm",
+    "image_file": "a8f4f59818f189db7edfea1382b2878b.jpg",
+    "average_color": {
+      "rgb": [
+        163,
+        200,
+        185
+      ],
+      "hex": "#a3c8b9"
+    },
+    "scraped_at": "2025-07-14T13:39:04.484975",
+    "page_title": ""
+  },
+  {
+    "id": "b72e74fd",
+    "name": "ライトグリーン",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2345cbt.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2345cb.htm",
+    "image_file": "5979a0b0f8b60705f5bd491a2a4cf850.jpg",
+    "average_color": {
+      "rgb": [
+        196,
+        222,
+        183
+      ],
+      "hex": "#c4deb7"
+    },
+    "scraped_at": "2025-07-14T13:39:05.511974",
+    "page_title": ""
+  },
+  {
+    "id": "9ef54649",
+    "name": "金茶",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2342bat.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2342ba.htm",
+    "image_file": "7fbcdb9aa800d034d5237413ec77ea69.jpg",
+    "average_color": {
+      "rgb": [
+        222,
+        199,
+        172
+      ],
+      "hex": "#dec7ac"
+    },
+    "scraped_at": "2025-07-14T13:39:06.538666",
+    "page_title": ""
+  },
+  {
+    "id": "a001ed1c",
+    "name": "茶",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23443bt.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23443b.htm",
+    "image_file": "986f8da68321877be90020e090cd2f28.jpg",
+    "average_color": {
+      "rgb": [
+        216,
+        193,
+        180
+      ],
+      "hex": "#d8c1b4"
+    },
+    "scraped_at": "2025-07-14T13:39:07.570450",
+    "page_title": ""
+  },
+  {
+    "id": "f233dec4",
+    "name": "紅",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23453ct.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23453c.htm",
+    "image_file": "6c40a05c3ad17b19dd753a08439d0d82.jpg",
+    "average_color": {
+      "rgb": [
+        211,
+        175,
+        177
+      ],
+      "hex": "#d3afb1"
+    },
+    "scraped_at": "2025-07-14T13:39:08.598318",
+    "page_title": ""
+  },
+  {
+    "id": "7e64b368",
+    "name": "ボタン",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23456dt.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23456d.htm",
+    "image_file": "d2f491d1a415e5e76a12673f02720175.jpg",
+    "average_color": {
+      "rgb": [
+        203,
+        177,
+        187
+      ],
+      "hex": "#cbb1bb"
+    },
+    "scraped_at": "2025-07-14T13:39:09.624981",
+    "page_title": ""
+  },
+  {
+    "id": "436cf04c",
+    "name": "紺",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234350t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234350.htm",
+    "image_file": "a7e9656b7680cc0737c60cd1ec6fe984.jpg",
+    "average_color": {
+      "rgb": [
+        177,
+        183,
+        202
+      ],
+      "hex": "#b1b7ca"
+    },
+    "scraped_at": "2025-07-14T13:39:10.651319",
+    "page_title": ""
+  },
+  {
+    "id": "3392edcb",
+    "name": "オリーブ",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234271t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234271.htm",
+    "image_file": "d509b8901448f2b5759e4bba7040a920.jpg",
+    "average_color": {
+      "rgb": [
+        189,
+        190,
+        162
+      ],
+      "hex": "#bdbea2"
+    },
+    "scraped_at": "2025-07-14T13:39:11.678653",
+    "page_title": ""
+  },
+  {
+    "id": "9b9a35c2",
+    "name": "白",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2343a9t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2343a9.htm",
+    "image_file": "fbc317eddf174c8d3d115aa5f6e6e5d1.jpg",
+    "average_color": {
+      "rgb": [
+        241,
+        241,
+        240
+      ],
+      "hex": "#f1f1f0"
+    },
+    "scraped_at": "2025-07-14T13:39:12.708239",
+    "page_title": ""
+  },
+  {
+    "id": "c4fccd8d",
+    "name": "雪",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2345c3t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2345c3.htm",
+    "image_file": "12d6806fcf6957d70da2270ba3cebe8e.jpg",
+    "average_color": {
+      "rgb": [
+        241,
+        241,
+        239
+      ],
+      "hex": "#f1f1ef"
+    },
+    "scraped_at": "2025-07-14T13:39:13.733941",
+    "page_title": ""
+  },
+  {
+    "id": "52a50e10",
+    "name": "ホワイトグレー",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234562t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234562.htm",
+    "image_file": "c7507e89350ddabf735456774feb0b76.jpg",
+    "average_color": {
+      "rgb": [
+        232,
+        232,
+        228
+      ],
+      "hex": "#e8e8e4"
+    },
+    "scraped_at": "2025-07-14T13:39:14.761272",
+    "page_title": ""
+  },
+  {
+    "id": "df3fe422",
+    "name": "ダークグレー",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23442et.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23442e.htm",
+    "image_file": "9c2ff070d8830f6f268dc9ed6e6ad1ac.jpg",
+    "average_color": {
+      "rgb": [
+        181,
+        182,
+        183
+      ],
+      "hex": "#b5b6b7"
+    },
+    "scraped_at": "2025-07-14T13:39:15.788285",
+    "page_title": ""
+  },
+  {
+    "id": "b399eac0",
+    "name": "黒",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2342f5t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2342f5.htm",
+    "image_file": "c188fffcfa48f7ff1e507d629c7102d1.jpg",
+    "average_color": {
+      "rgb": [
+        172,
+        173,
+        173
+      ],
+      "hex": "#acadad"
+    },
+    "scraped_at": "2025-07-14T13:39:16.814958",
+    "page_title": ""
+  },
+  {
+    "id": "2c880707",
+    "name": "鼠",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234493t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234493.htm",
+    "image_file": "8c4ab30d2d7cce6d68669d51df857303.jpg",
+    "average_color": {
+      "rgb": [
+        198,
+        196,
+        192
+      ],
+      "hex": "#c6c4c0"
+    },
+    "scraped_at": "2025-07-14T13:39:17.846697",
+    "page_title": ""
+  },
+  {
+    "id": "03a6a049",
+    "name": "白鼠",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2343b0t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2343b0.htm",
+    "image_file": "01361332bf2eb788746e794419001002.jpg",
+    "average_color": {
+      "rgb": [
+        228,
+        224,
+        218
+      ],
+      "hex": "#e4e0da"
+    },
+    "scraped_at": "2025-07-14T13:39:18.872653",
+    "page_title": ""
+  },
+  {
+    "id": "37bdfd6f",
+    "name": "淡鼠",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234241t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234241.htm",
+    "image_file": "5f6888b10558f5396fa048ac7df82abc.jpg",
+    "average_color": {
+      "rgb": [
+        218,
+        216,
+        210
+      ],
+      "hex": "#dad8d2"
+    },
+    "scraped_at": "2025-07-14T13:39:19.898893",
+    "page_title": ""
+  },
+  {
+    "id": "462001a9",
+    "name": "ライトグレー",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2345cct.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2345cc.htm",
+    "image_file": "a158c9aee25e2637ff7b5f8dee4e5a4d.jpg",
+    "average_color": {
+      "rgb": [
+        220,
+        220,
+        219
+      ],
+      "hex": "#dcdcdb"
+    },
+    "scraped_at": "2025-07-14T13:39:20.925756",
+    "page_title": ""
+  },
+  {
+    "id": "19b77c85",
+    "name": "銀鼠",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2342d1t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2342d1.htm",
+    "image_file": "f985fb5133abe2ebc3fefaf88b43b20e.jpg",
+    "average_color": {
+      "rgb": [
+        214,
+        212,
+        214
+      ],
+      "hex": "#d6d4d6"
+    },
+    "scraped_at": "2025-07-14T13:39:21.952939",
+    "page_title": ""
+  },
+  {
+    "id": "6988d129",
+    "name": "古染",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234347t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234347.htm",
+    "image_file": "9bfa2f9d6bad9626bba0740b29d201e8.jpg",
+    "average_color": {
+      "rgb": [
+        231,
+        222,
+        211
+      ],
+      "hex": "#e7ded3"
+    },
+    "scraped_at": "2025-07-14T13:39:22.980194",
+    "page_title": ""
+  },
+  {
+    "id": "ee39b5ff",
+    "name": "アーモンド",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2341bft.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2341bf.htm",
+    "image_file": "444341f6b48782b0f246b28d0b524ba7.jpg",
+    "average_color": {
+      "rgb": [
+        227,
+        222,
+        212
+      ],
+      "hex": "#e3ded4"
+    },
+    "scraped_at": "2025-07-14T13:39:24.006658",
+    "page_title": ""
+  },
+  {
+    "id": "6c6a9d10",
+    "name": "ラクダ",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2345dat.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2345da.htm",
+    "image_file": "62ff4359a1f9cd24ea97f7fbcdd3562a.jpg",
+    "average_color": {
+      "rgb": [
+        218,
+        208,
+        196
+      ],
+      "hex": "#dad0c4"
+    },
+    "scraped_at": "2025-07-14T13:39:25.033796",
+    "page_title": ""
+  },
+  {
+    "id": "71d49a5f",
+    "name": "栗茶",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2342eet.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2342ee.htm",
+    "image_file": "298d1091d32bad74baa5cff28d6d58c3.jpg",
+    "average_color": {
+      "rgb": [
+        193,
+        184,
+        179
+      ],
+      "hex": "#c1b8b3"
+    },
+    "scraped_at": "2025-07-14T13:39:26.067102",
+    "page_title": ""
+  },
+  {
+    "id": "864c55e7",
+    "name": "コバルト",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234349t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234349.htm",
+    "image_file": "5f501a66d3cc3f7729718f2cbe944ee8.jpg",
+    "average_color": {
+      "rgb": [
+        175,
+        192,
+        211
+      ],
+      "hex": "#afc0d3"
+    },
+    "scraped_at": "2025-07-14T13:39:27.129038",
+    "page_title": ""
+  },
+  {
+    "id": "97503916",
+    "name": "藍",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/2341c5t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/2341c5.htm",
+    "image_file": "b9c2da508c809ffc91cd911453bcd270.jpg",
+    "average_color": {
+      "rgb": [
+        195,
+        202,
+        223
+      ],
+      "hex": "#c3cadf"
+    },
+    "scraped_at": "2025-07-14T13:39:28.157384",
+    "page_title": ""
+  },
+  {
+    "id": "161e45f0",
+    "name": "松",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234585t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234585.htm",
+    "image_file": "2840f61ef861fd11e1f3a1f7d9158f96.jpg",
+    "average_color": {
+      "rgb": [
+        182,
+        196,
+        190
+      ],
+      "hex": "#b6c4be"
+    },
+    "scraped_at": "2025-07-14T13:39:29.183410",
+    "page_title": ""
+  },
+  {
+    "id": "7be5c11c",
+    "name": "エメラルド",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234261t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234261.htm",
+    "image_file": "b5ecd87d448e83c70327c4b6b2d80fb5.jpg",
+    "average_color": {
+      "rgb": [
+        172,
+        201,
+        196
+      ],
+      "hex": "#acc9c4"
+    },
+    "scraped_at": "2025-07-14T13:39:30.210353",
+    "page_title": ""
+  },
+  {
+    "id": "05e25849",
+    "name": "コルク",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23434et.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23434e.htm",
+    "image_file": "d6b686251e64dfa2585c19c496071fcb.jpg",
+    "average_color": {
+      "rgb": [
+        211,
+        201,
+        187
+      ],
+      "hex": "#d3c9bb"
+    },
+    "scraped_at": "2025-07-14T13:39:31.237245",
+    "page_title": ""
+  },
+  {
+    "id": "6c53ee81",
+    "name": "ブラウン",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234517t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234517.htm",
+    "image_file": "80cc1a0afb98da3f415ac72597e9b53f.jpg",
+    "average_color": {
+      "rgb": [
+        202,
+        189,
+        181
+      ],
+      "hex": "#cabdb5"
+    },
+    "scraped_at": "2025-07-14T13:39:32.264538",
+    "page_title": ""
+  },
+  {
+    "id": "ea4a1bf3",
+    "name": "グレー",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234305t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234305.htm",
+    "image_file": "5e3561c04bd53583369758f31b51838f.jpg",
+    "average_color": {
+      "rgb": [
+        192,
+        193,
+        193
+      ],
+      "hex": "#c0c1c1"
+    },
+    "scraped_at": "2025-07-14T13:39:33.292354",
+    "page_title": ""
+  },
+  {
+    "id": "76021cf5",
+    "name": "チャコール",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23443et.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23443e.htm",
+    "image_file": "cf8a58b6c4c96d326e9ae52962afc54a.jpg",
+    "average_color": {
+      "rgb": [
+        189,
+        186,
+        183
+      ],
+      "hex": "#bdbab7"
+    },
+    "scraped_at": "2025-07-14T13:39:34.320269",
+    "page_title": ""
+  },
+  {
+    "id": "2d6a6c94",
+    "name": "濃鼠",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/23432dt.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/23432d.htm",
+    "image_file": "ab6857b28543efa4dd9399f7682276be.jpg",
+    "average_color": {
+      "rgb": [
+        192,
+        191,
+        189
+      ],
+      "hex": "#c0bfbd"
+    },
+    "scraped_at": "2025-07-14T13:39:35.346600",
+    "page_title": ""
+  },
+  {
+    "id": "2540b0ef",
+    "name": "墨",
+    "brand": "その他",
+    "weight": null,
+    "size": null,
+    "thumbnail_url": "https://www.shimeitehai.co.jp/cl2/234/234400t.jpg",
+    "detail_url": "https://www.shimeitehai.co.jp/cl2/234/234400.htm",
+    "image_file": "bc7fa25b02b5488deab33b3ff7dcb45b.jpg",
+    "average_color": {
+      "rgb": [
+        181,
+        181,
+        180
+      ],
+      "hex": "#b5b5b4"
+    },
+    "scraped_at": "2025-07-14T13:39:36.379227",
+    "page_title": ""
+  }
+]
