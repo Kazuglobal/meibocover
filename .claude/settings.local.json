@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm i:*)",
+      "Bash(sudo npm i -g @anthropic-ai/claude-code)",
+      "Bash(npx @anthropic-ai/claude-code)",
+      "Bash(docker-compose:*)",
+      "Bash(node:*)",
+      "Bash(npm --version)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(npm run build:*)",
+      "Bash(pkill:*)",
+      "Bash(cp:*)",
+      "Bash(true)",
+      "Bash(npm run server:build:*)",
+      "Bash(rm:*)",
+      "Bash(ss:*)",
+      "Bash(npx next:*)",
+      "Bash(timeout 10s npx next dev)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(find:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(echo)",
+      "Bash(npx playwright:*)"
+    ],
+    "deny": []
+  }
+}

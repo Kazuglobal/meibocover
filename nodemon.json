@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "ts,json",
+  "ignore": ["coverpreview-frontend/*", "node_modules/*", "uploads/*"],
+  "exec": "ts-node src/server.ts"
+} 
