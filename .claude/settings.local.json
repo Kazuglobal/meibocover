@@ -22,7 +22,11 @@
       "Bash(find:*)",
       "Bash(npm uninstall:*)",
       "Bash(echo)",
-      "Bash(npx playwright:*)"
+      "Bash(npx playwright:*)",
+      "WebFetch(domain:www.shimeitehai.co.jp)",
+      "Bash(pip install:*)",
+      "Bash(python:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }
