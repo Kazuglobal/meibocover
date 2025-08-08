@@ -7,8 +7,10 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)  # フロントエンドからのアクセスを許可
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 class PaperColorAPI:
-    def __init__(self, data_file="paper_colors/paper_colors_api.json"):
+    def __init__(self, data_file=os.path.join(BASE_DIR, "paper_colors_api.json")):
         self.data_file = data_file
         self._data = None
         self._last_loaded = None
@@ -178,7 +180,7 @@ def serve_image(filename):
 def serve_official_image(filename):
     """公式紙見本画像を提供"""
     try:
-        return send_from_directory('paper_colors/official_images', filename)
+        return send_from_directory(os.path.join(BASE_DIR, 'paper_colors/official_images'), filename)
     except FileNotFoundError:
         return jsonify({"error": "Official image not found"}), 404
 
@@ -186,7 +188,7 @@ def serve_official_image(filename):
 def get_official_colors():
     """公式紙見本データを取得"""
     try:
-        with open('paper_colors/official_paper_colors.json', 'r', encoding='utf-8') as f:
+        with open(os.path.join(BASE_DIR, 'paper_colors', 'official_paper_colors.json'), 'r', encoding='utf-8') as f:
             data = json.load(f)
         return jsonify(data)
     except FileNotFoundError:

@@ -1,5 +1,8 @@
 -- 名簿表紙デザインシステム データベース初期化
 
+-- UUID生成に必要な拡張機能
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- 顧客テーブル
 CREATE TABLE customers (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
