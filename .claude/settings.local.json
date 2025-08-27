@@ -30,7 +30,13 @@
       "Bash(powershell:*)",
       "Bash(timeout:*)",
       "Bash(start /B python:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(git submodule:*)",
+      "Bash(mkdir:*)",
+      "Bash(git rm:*)",
+      "Bash(mv:*)",
+      "Bash(git reset:*)"
     ],
     "deny": []
   }

@@ -1,107 +1,36 @@
-# 名簿表紙デザインシステム
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-卒業アルバムの表紙デザインを効率化するWebアプリケーションです。
+## Getting Started
 
-## 🚀 機能
+First, run the development server:
 
-### フェーズ1（実装済み）
-- ✅ 表紙プレビュー画面
-- ✅ 用紙選択（レザック各種、プレスコート）
-- ✅ 題字入力（9種類の書体）
-- ✅ 校章・ロゴアップロード（背景自動削除）
-- ✅ 箔押しオプション（金・銀）
-- ✅ リアルタイムプレビュー
-- ✅ 途中保存機能
-
-### フェーズ2-4（実装予定）
-- 原稿管理機能
-- ワークフロー機能
-- データ出力機能
-
-## 🛠️ 技術スタック
-
-**フロントエンド**
-- React + TypeScript
-- Vite
-- React Router
-- React Query
-- Axios
-
-**バックエンド**
-- Node.js + Express
-- PostgreSQL
-- Redis
-- Multer（ファイルアップロード）
-
-## 📦 セットアップ
-
-### 前提条件
-- Node.js 18以上
-- Docker Desktop
-- Git
-
-### インストール手順
-
-1. リポジトリのクローン
 ```bash
-git clone [repository-url]
-cd coverpreview
-```
-
-2. バックエンドのセットアップ
-```bash
-# 依存関係のインストール
-npm install
-
-# 環境変数の設定
-cp .env.example .env
-# .envファイルを編集して必要な値を設定
-
-# データベースの起動
-docker-compose up -d
-
-# サーバーの起動
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-3. フロントエンドのセットアップ
-```bash
-cd coverpreview-app
-npm install
-npm run dev
-```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 🌐 アクセスURL
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- フロントエンド: http://localhost:5173
-- バックエンドAPI: http://localhost:3001
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## 📝 使い方
+## Learn More
 
-1. プロジェクトを作成（APIで実行）
-2. 生成されたURLにアクセス
-   - 顧客用: `/edit/{customer-url}`
-   - 営業用: `/view/{sales-url}`
-   - 製作部用: `/download/{production-url}`
-3. 表紙デザインを作成・保存
+To learn more about Next.js, take a look at the following resources:
 
-## 🔧 開発コマンド
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-```bash
-# バックエンド開発サーバー
-npm run dev
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-# フロントエンド開発サーバー
-cd coverpreview-app && npm run dev
+## Deploy on Vercel
 
-# TypeScriptビルド
-npm run build
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-# データベース管理
-docker-compose up    # 起動
-docker-compose down  # 停止
-```
-
-## 📄 ライセンス
-
-Private 
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

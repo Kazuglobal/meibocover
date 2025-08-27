@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 高品質テキストレンダリング */
+.preview-container, .preview-container * {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+  font-feature-settings: "liga" 1, "kern" 1 !important;
+  -webkit-text-stroke: 0.1px transparent;
+}
+
+/* 日本語フォント定義 */
+.font-kozuka-gothic-h {
+  font-family: "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+  font-weight: normal;
+}
+
+.font-kozuka-gothic-b {
+  font-family: "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+  font-weight: bold;
+}
+
+.font-kozuka-mincho-h {
+  font-family: "Hiragino Mincho ProN", "游明朝", YuMincho, serif;
+  font-weight: normal;
+}
+
+.font-kozuka-mincho-b {
+  font-family: "Hiragino Mincho ProN", "游明朝", YuMincho, serif;
+  font-weight: bold;
+}
+
+.font-df-kaisho {
+  font-family: "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, serif;
+  font-weight: normal;
+}
+
+.font-df-gyokaisho {
+  font-family: "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, serif;
+  font-weight: normal;
+}
+
+.font-df-reisho {
+  font-family: "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, serif;
+  font-weight: normal;
+}
+
+.font-df-pop {
+  font-family: "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+  font-weight: bold;
+}
+
+
+/* テキスト要素の改行防止 */
+.no-wrap-text {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  line-height: 1.1 !important;
+  display: inline-block !important;
+  max-width: none !important;
+  word-break: keep-all !important;
+  word-wrap: normal !important;
+}
+
+/* 箔押し効果 */
+.foil-gold {
+  background: linear-gradient(45deg, #ffd700, #ffed4e, #fbbf24, #f59e0b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.foil-silver {
+  background: linear-gradient(45deg, #e5e7eb, #f3f4f6, #d1d5db, #9ca3af);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+}
+
+.foil-black {
+  color: #000000 !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+  font-weight: bold !important;
+  filter: contrast(1.2) brightness(0.8);
+}
+
