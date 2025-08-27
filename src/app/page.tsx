@@ -28,6 +28,29 @@ interface LogoElement {
   hasBackground?: boolean;
 }
 
+interface PaperColor {
+  name: string;
+  hex: string;
+  brand: string;
+  thumbnailUrl: string;
+  imageFile: string;
+  localImageUrl: string | null;
+  isOfficial: boolean;
+  official_image?: string;
+}
+
+interface ApiColorResponse {
+  name: string;
+  average_color?: {
+    hex: string;
+  };
+  brand: string;
+  thumbnail_url?: string;
+  official_image?: string;
+  local_image_url?: string;
+  image_file?: string;
+}
+
 export default function Home() {
   const [selectedPaper, setSelectedPaper] = useState('レザック白');
   const [selectedFoil, setSelectedFoil] = useState('なし');
@@ -40,7 +63,7 @@ export default function Home() {
   const [selectedElementType, setSelectedElementType] = useState<'text' | 'logo' | null>(null);
   const dragRef = useRef<{ offsetX: number; offsetY: number } | null>(null);
 
-  const [papers, setPapers] = useState<Array<{name: string, hex: string, brand: string, thumbnailUrl: string, imageFile: string, localImageUrl: string | null, isOfficial: boolean, official_image?: string}>>([]);
+  const [papers, setPapers] = useState<PaperColor[]>([]);
 
   // テキストの幅を計算して適切なフォントサイズを決定する関数
   const getOptimalFontSize = (text: string, baseFontSize: number, maxWidth: number = 280) => {
@@ -238,7 +261,7 @@ export default function Home() {
         console.log('公式紙色データ取得成功:', officialResponse.data);
         const officialColors = officialResponse.data.colors || [];
         
-        const paperData = officialColors.map((color: any) => ({
+        const paperData = officialColors.map((color: ApiColorResponse) => ({
           name: color.name,
           hex: color.average_color?.hex || '#ffffff',
           brand: color.brand,
@@ -263,7 +286,7 @@ export default function Home() {
           const response = await axios.get('http://localhost:5000/api/colors');
           const colors = response.data.colors || [];
           
-          const paperData = colors.map((color: any) => ({
+          const paperData = colors.map((color: ApiColorResponse) => ({
             name: color.name,
             hex: color.average_color?.hex || '#ffffff',
             brand: color.brand || 'その他',
@@ -577,7 +600,7 @@ export default function Home() {
               {/* カテゴリ別にグループ化（改良版） */}
               {(() => {
                 // 紙をより適切にカテゴリ分けする関数
-                const getCategoryAndDisplayName = (paper: any) => {
+                const getCategoryAndDisplayName = (paper: PaperColor) => {
                   const name = paper.name;
                   
                   // レザック66シリーズ
@@ -639,7 +662,7 @@ export default function Home() {
                 };
 
                 // カテゴリ別にグループ化
-                const groups = papers.reduce((acc: any, paper) => {
+                const groups = papers.reduce((acc: Record<string, (PaperColor & { displayName: string })[]>, paper) => {
                   const { category, displayName } = getCategoryAndDisplayName(paper);
                   if (!acc[category]) acc[category] = [];
                   acc[category].push({ ...paper, displayName });
@@ -670,8 +693,8 @@ export default function Home() {
                 return sortedCategories.map(category => (
                   <optgroup key={category} label={`━━ ${category} ━━`}>
                     {groups[category]
-                      .sort((a: any, b: any) => a.displayName.localeCompare(b.displayName, 'ja'))
-                      .map((paper: any) => (
+                      .sort((a, b) => a.displayName.localeCompare(b.displayName, 'ja'))
+                      .map((paper) => (
                         <option key={paper.name} value={paper.name}>
                           {paper.displayName}
                         </option>
@@ -693,7 +716,7 @@ export default function Home() {
                   >
                     {papers.find(p => p.name === selectedPaper)?.localImageUrl && (
                       <img
-                        src={papers.find(p => p.name === selectedPaper)?.localImageUrl!}
+                        src={papers.find(p => p.name === selectedPaper)?.localImageUrl || ''}
                         alt={selectedPaper}
                         className="w-full h-full object-cover"
                         onError={(e) => {
@@ -1167,7 +1190,7 @@ export default function Home() {
                           {/* 大きな一枚表示 */}
                           <div className="flex justify-center">
                             <img
-                              src={papers.find(p => p.name === selectedPaper)?.localImageUrl!}
+                              src={papers.find(p => p.name === selectedPaper)?.localImageUrl || ''}
                               alt={selectedPaper}
                               className="max-w-full h-auto border rounded-lg shadow-lg"
                               style={{ 

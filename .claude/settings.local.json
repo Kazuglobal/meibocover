@@ -36,7 +36,8 @@
       "Bash(mkdir:*)",
       "Bash(git rm:*)",
       "Bash(mv:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }
