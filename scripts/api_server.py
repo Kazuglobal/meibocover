@@ -10,7 +10,7 @@ CORS(app)  # フロントエンドからのアクセスを許可
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class PaperColorAPI:
-    def __init__(self, data_file=os.path.join(BASE_DIR, "paper_colors_api.json")):
+    def __init__(self, data_file=os.path.join(BASE_DIR, "paper_colors", "paper_colors_api.json")):
         self.data_file = data_file
         self._data = None
         self._last_loaded = None
