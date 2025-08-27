@@ -92,7 +92,7 @@ export default function Home() {
       const originalHeight = previewElement.offsetHeight;
 
       // html2canvasでプレビューをキャプチャ（高解像度）
-      const canvas = await html2canvas(previewElement, {
+      const options = {
         useCORS: true,
         allowTaint: true,
         scale,
@@ -100,10 +100,10 @@ export default function Home() {
         height: originalHeight,
         logging: false,
         backgroundColor: null,
-        onclone: (clonedDoc) => {
+        onclone: (clonedDoc: Document) => {
           // クローンされたドキュメント内の画像のCORSを処理
           const images = clonedDoc.querySelectorAll('img');
-          images.forEach(img => {
+          images.forEach((img: HTMLImageElement) => {
             img.crossOrigin = 'anonymous';
           });
           
@@ -118,7 +118,18 @@ export default function Home() {
           `;
           clonedDoc.head.appendChild(style);
         }
-      } as any);
+      } satisfies Partial<{
+        useCORS: boolean;
+        allowTaint: boolean;
+        scale: number;
+        width: number;
+        height: number;
+        logging: boolean;
+        backgroundColor: string | null;
+        onclone: (clonedDoc: Document) => void;
+      }>;
+      
+      const canvas: HTMLCanvasElement = await html2canvas(previewElement, options);
 
       // PDFドキュメントを作成（A4サイズ、高解像度）
       const pdf = new jsPDF({
@@ -312,48 +323,37 @@ export default function Home() {
     fetchPaperColors();
   }, []);
 
-  // 色をCSSフィルターに変換する関数（シンプル版）
+  // 色をCSSフィルターに変換する関数（改良版）
   const getColorFilter = (hexColor: string) => {
-    // 基本的な色に対応したフィルターマッピング
-    const colorFilters: { [key: string]: string } = {
-      '#FF0000': 'hue-rotate(0deg) saturate(2)',           // 赤
-      '#00FF00': 'hue-rotate(120deg) saturate(2)',         // 緑
-      '#0000FF': 'hue-rotate(240deg) saturate(2)',         // 青
-      '#FFFF00': 'hue-rotate(60deg) saturate(2)',          // 黄色
-      '#FF00FF': 'hue-rotate(300deg) saturate(2)',         // マゼンタ
-      '#00FFFF': 'hue-rotate(180deg) saturate(2)',         // シアン
-      '#FFA500': 'hue-rotate(30deg) saturate(1.5)',        // オレンジ
-      '#800080': 'hue-rotate(270deg) saturate(1.5)',       // 紫
-      '#008000': 'hue-rotate(120deg) saturate(1.2)',       // 暗い緑
-      '#000080': 'hue-rotate(240deg) saturate(1.2)',       // 暗い青
-    };
-    
-    // 完全一致があればそれを使用
-    if (colorFilters[hexColor.toUpperCase()]) {
-      return colorFilters[hexColor.toUpperCase()];
-    }
-    
-    // 近い色を探す
+    // HEXからRGBに変換
     const hex = hexColor.replace('#', '');
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
+    const r = parseInt(hex.substr(0, 2), 16) / 255;
+    const g = parseInt(hex.substr(2, 2), 16) / 255;
+    const b = parseInt(hex.substr(4, 2), 16) / 255;
     
-    // 単純な色相計算
+    // RGBからHSLに変換
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const diff = max - min;
+    
     let hue = 0;
-    if (r >= g && r >= b) {
-      hue = 0; // 赤系
-    } else if (g >= r && g >= b) {
-      hue = 120; // 緑系
-    } else {
-      hue = 240; // 青系
+    if (diff !== 0) {
+      if (max === r) {
+        hue = ((g - b) / diff) % 6;
+      } else if (max === g) {
+        hue = (b - r) / diff + 2;
+      } else {
+        hue = (r - g) / diff + 4;
+      }
     }
+    hue = Math.round(hue * 60);
+    if (hue < 0) hue += 360;
     
-    // 明度計算
-    const brightness = (r + g + b) / 3;
-    const brightnessPercent = Math.max(50, (brightness / 255) * 150);
+    const lightness = (max + min) / 2;
+    const saturation = diff === 0 ? 0 : diff / (1 - Math.abs(2 * lightness - 1));
     
-    return `hue-rotate(${hue}deg) saturate(150%) brightness(${brightnessPercent}%)`;
+    // CSS フィルターに変換
+    return `sepia(1) saturate(${Math.round(saturation * 300)}%) hue-rotate(${hue}deg) brightness(${Math.round(lightness * 150)}%)`;
   };
 
   const removeImageBackground = (imageSrc: string): Promise<string> => {
@@ -591,7 +591,7 @@ export default function Home() {
             </label>
             <select
               value={selectedPaper}
-              onChange={(e) => setSelectedPaper(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedPaper(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {/* カテゴリ別にグループ化（改良版） */}
@@ -739,7 +739,7 @@ export default function Home() {
             </label>
             <select
               value={selectedFoil}
-              onChange={(e) => setSelectedFoil(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedFoil(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {foilOptions.map((foil) => (
@@ -869,7 +869,7 @@ export default function Home() {
                   <input
                     type="text"
                     value={selectedTextData.text || ''}
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       updateTextElement(selectedElement!, { text: e.target.value });
                     }}
                     className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -880,7 +880,7 @@ export default function Home() {
                   <label className="block text-xs text-gray-600 mb-1">書体</label>
                   <select
                     value={selectedTextData.font}
-                    onChange={(e) => updateTextElement(selectedElement!, { font: e.target.value })}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => updateTextElement(selectedElement!, { font: e.target.value })}
                     className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
                   >
                     {fonts.map((font) => (
@@ -896,7 +896,7 @@ export default function Home() {
                     min="10"
                     max="48"
                     value={selectedTextData.size}
-                    onChange={(e) => updateTextElement(selectedElement!, { size: parseInt(e.target.value) })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateTextElement(selectedElement!, { size: parseInt(e.target.value) })}
                     className="w-full"
                   />
                   <div className="text-xs text-gray-500 text-center">{selectedTextData.size}px</div>
@@ -917,7 +917,7 @@ export default function Home() {
                     min="20"
                     max="200"
                     value={selectedLogoData.width}
-                    onChange={(e) => updateLogoElement(selectedElement!, { width: parseInt(e.target.value) })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateLogoElement(selectedElement!, { width: parseInt(e.target.value) })}
                     className="w-full"
                   />
                   <div className="text-xs text-gray-500 text-center">{selectedLogoData.width}px</div>
@@ -930,7 +930,7 @@ export default function Home() {
                     min="20"
                     max="200"
                     value={selectedLogoData.height}
-                    onChange={(e) => updateLogoElement(selectedElement!, { height: parseInt(e.target.value) })}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateLogoElement(selectedElement!, { height: parseInt(e.target.value) })}
                     className="w-full"
                   />
                   <div className="text-xs text-gray-500 text-center">{selectedLogoData.height}px</div>
@@ -943,7 +943,7 @@ export default function Home() {
                       <input
                         type="color"
                         value={selectedLogoData.color || '#000000'}
-                        onChange={(e) => updateLogoElement(selectedElement!, { color: e.target.value })}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateLogoElement(selectedElement!, { color: e.target.value })}
                         className="w-8 h-8 border border-gray-300 rounded cursor-pointer"
                       />
                       <span className="text-xs text-gray-500">
@@ -1040,7 +1040,7 @@ export default function Home() {
                     draggable={false}
                     style={{
                       filter: !element.hasBackground && element.color && element.color !== '#000000' 
-                        ? `brightness(0) saturate(100%) ${getColorFilter(element.color)}` 
+                        ? getColorFilter(element.color)
                         : 'none'
                     }}
                   />
