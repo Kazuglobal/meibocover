@@ -95,12 +95,11 @@ export default function Home() {
       const canvas = await html2canvas(previewElement, {
         useCORS: true,
         allowTaint: true,
-        scale: scale,
+        scale,
         width: originalWidth,
         height: originalHeight,
         logging: false,
         backgroundColor: null,
-        imageTimeout: 15000,
         onclone: (clonedDoc) => {
           // クローンされたドキュメント内の画像のCORSを処理
           const images = clonedDoc.querySelectorAll('img');
@@ -119,7 +118,7 @@ export default function Home() {
           `;
           clonedDoc.head.appendChild(style);
         }
-      });
+      } as any);
 
       // PDFドキュメントを作成（A4サイズ、高解像度）
       const pdf = new jsPDF({
