@@ -44,3 +44,13 @@ next-env.d.ts
 dist/
 uploads/
 coverpreview-frontend/
+src/database/
+src/routes/
+src/server.ts
+backend/
+scripts/
+database/
+docker-compose.yml
+nodemon.json
+SYSTEM_DESIGN.md
+tsconfig.tsbuildinfo
