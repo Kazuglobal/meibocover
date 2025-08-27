@@ -95,13 +95,11 @@ export default function Home() {
       const canvas = await html2canvas(previewElement, {
         useCORS: true,
         allowTaint: true,
-        foreignObjectRendering: false,
         scale: scale,
         width: originalWidth,
         height: originalHeight,
         logging: false,
         backgroundColor: null,
-        removeContainer: true,
         imageTimeout: 15000,
         onclone: (clonedDoc) => {
           // クローンされたドキュメント内の画像のCORSを処理
