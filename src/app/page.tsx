@@ -727,18 +727,15 @@ export default function Home() {
         let backgroundLab: [number, number, number] = [50, 0, 0];
         if (colorBins.size > 0) {
           let bestEntry: { count: number; lab: [number, number, number] } | null = null;
-          colorBins.forEach((entry) => {
+          for (const entry of colorBins.values()) {
             if (!bestEntry || entry.count > bestEntry.count) {
               bestEntry = entry;
             }
-          });
+          }
 
           if (bestEntry) {
-            backgroundLab = [
-              bestEntry.lab[0] / bestEntry.count,
-              bestEntry.lab[1] / bestEntry.count,
-              bestEntry.lab[2] / bestEntry.count,
-            ];
+            const { lab, count } = bestEntry;
+            backgroundLab = [lab[0] / count, lab[1] / count, lab[2] / count];
           }
         } else {
           let sumL = 0;

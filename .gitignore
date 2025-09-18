@@ -54,3 +54,5 @@ docker-compose.yml
 nodemon.json
 SYSTEM_DESIGN.md
 tsconfig.tsbuildinfo
+
+.vercel
