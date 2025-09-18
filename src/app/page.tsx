@@ -925,15 +925,47 @@ export default function Home() {
     ));
   };
 
-  const handleMouseDown = (e: React.MouseEvent, id: string, type: 'text' | 'logo') => {
-    e.preventDefault();
-    const rect = e.currentTarget.getBoundingClientRect();
-    const previewRect = e.currentTarget.closest('.preview-container')?.getBoundingClientRect();
+  type PointerDownEvent = React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>;
+  type PointerMoveEvent = React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>;
+
+  const getPointerPosition = (
+    event: PointerDownEvent | PointerMoveEvent
+  ): { clientX: number; clientY: number } | null => {
+    const nativeEvent = event.nativeEvent as TouchEvent | MouseEvent;
+
+    if ('touches' in nativeEvent && nativeEvent.touches.length > 0) {
+      const touch = nativeEvent.touches[0];
+      return { clientX: touch.clientX, clientY: touch.clientY };
+    }
+
+    if ('changedTouches' in nativeEvent && nativeEvent.changedTouches.length > 0) {
+      const touch = nativeEvent.changedTouches[0];
+      return { clientX: touch.clientX, clientY: touch.clientY };
+    }
+
+    if ('clientX' in nativeEvent && 'clientY' in nativeEvent) {
+      return { clientX: nativeEvent.clientX, clientY: nativeEvent.clientY };
+    }
+
+    return null;
+  };
+
+  const handlePointerDown = (event: PointerDownEvent, id: string, type: 'text' | 'logo') => {
+    const position = getPointerPosition(event);
+    if (!position) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const previewRect = (event.currentTarget as HTMLElement).closest('.preview-container')?.getBoundingClientRect();
     if (!previewRect) return;
 
     dragRef.current = {
-      offsetX: e.clientX - rect.left,
-      offsetY: e.clientY - rect.top
+      offsetX: position.clientX - rect.left,
+      offsetY: position.clientY - rect.top
     };
 
     if (type === 'text') {
@@ -941,20 +973,30 @@ export default function Home() {
     } else {
       updateLogoElement(id, { isDragging: true });
     }
-    
+
     setSelectedElement(id);
     setSelectedElementType(type);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handlePointerMove = (event: PointerMoveEvent) => {
     const draggingTextElement = textElements.find(el => el.isDragging);
     const draggingLogoElement = logoElements.find(el => el.isDragging);
-    
+
     if ((!draggingTextElement && !draggingLogoElement) || !dragRef.current) return;
 
-    const previewRect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - previewRect.left) / previewRect.width) * 100;
-    const y = ((e.clientY - previewRect.top) / previewRect.height) * 100;
+    const position = getPointerPosition(event);
+    if (!position) {
+      return;
+    }
+
+    const nativeEvent = event.nativeEvent as TouchEvent | MouseEvent;
+    if ('touches' in nativeEvent || 'changedTouches' in nativeEvent) {
+      event.preventDefault();
+    }
+
+    const previewRect = event.currentTarget.getBoundingClientRect();
+    const x = ((position.clientX - previewRect.left) / previewRect.width) * 100;
+    const y = ((position.clientY - previewRect.top) / previewRect.height) * 100;
 
     if (draggingTextElement) {
       updateTextElement(draggingTextElement.id, {
@@ -969,7 +1011,7 @@ export default function Home() {
     }
   };
 
-  const handleMouseUp = () => {
+  const handlePointerUp = () => {
     textElements.forEach(el => {
       if (el.isDragging) {
         updateTextElement(el.id, { isDragging: false });
@@ -1431,9 +1473,12 @@ export default function Home() {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
                   }}
-                  onMouseMove={handleMouseMove}
-                  onMouseUp={handleMouseUp}
-                  onMouseLeave={handleMouseUp}
+                  onMouseMove={handlePointerMove}
+                  onTouchMove={handlePointerMove}
+                  onMouseUp={() => handlePointerUp()}
+                  onMouseLeave={() => handlePointerUp()}
+                  onTouchEnd={() => handlePointerUp()}
+                  onTouchCancel={() => handlePointerUp()}
                 >
               
               {/* ドラッグ可能なロゴ要素 */}
@@ -1450,7 +1495,8 @@ export default function Home() {
                     width: `${element.width}px`,
                     height: `${element.height}px`
                   }}
-                  onMouseDown={(e) => handleMouseDown(e, element.id, 'logo')}
+                  onMouseDown={(e) => handlePointerDown(e, element.id, 'logo')}
+                  onTouchStart={(e) => handlePointerDown(e, element.id, 'logo')}
                   onClick={(e) => {
                     e.stopPropagation();
                     setSelectedElement(element.id);
@@ -1551,7 +1597,8 @@ export default function Home() {
                     display: 'inline-block',
                     maxWidth: 'none'
                   }}
-                  onMouseDown={(e) => handleMouseDown(e, element.id, 'text')}
+                  onMouseDown={(e) => handlePointerDown(e, element.id, 'text')}
+                  onTouchStart={(e) => handlePointerDown(e, element.id, 'text')}
                   onClick={(e) => {
                     e.stopPropagation();
                     setSelectedElement(element.id);

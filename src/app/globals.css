@@ -25,6 +25,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
+.preview-container {
+  touch-action: none;
+}
+
 /* 高品質テキストレンダリング */
 .preview-container, .preview-container * {
   -webkit-font-smoothing: antialiased !important;
