@@ -37,7 +37,9 @@
       "Bash(git rm:*)",
       "Bash(mv:*)",
       "Bash(git reset:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(dir node_modules)",
+      "Bash(dir:*)"
     ],
     "deny": []
   }

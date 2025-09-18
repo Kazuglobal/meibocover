@@ -111,3 +111,21 @@ body {
   filter: contrast(1.2) brightness(0.8);
 }
 
+
+.preview-container.exporting .foil-gold,
+.preview-container.exporting .foil-silver,
+.preview-container.exporting .foil-black {
+  filter: none !important;
+}
+
+.preview-container.exporting .foil-gold {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3) !important;
+}
+
+.preview-container.exporting .foil-silver {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+}
+
+.preview-container.exporting .foil-black {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.65) !important;
+}

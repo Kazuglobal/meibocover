@@ -51,6 +51,156 @@ interface ApiColorResponse {
   image_file?: string;
 }
 
+type BackgroundRemovalConfig = {
+  targetSampleCountPerEdge: number;
+  quantizationStep: number;
+  hardThreshold: number;
+  softThreshold: number;
+  strongThreshold: number;
+  floodThreshold: number;
+  erosionIterations: number;
+  dilationIterations: number;
+  blurIterations: number;
+  featherIterations: number;
+};
+
+type MorphologyMode = 'dilate' | 'erode';
+
+const BACKGROUND_REMOVAL_CONFIG: BackgroundRemovalConfig = {
+  targetSampleCountPerEdge: 96,
+  quantizationStep: 6,
+  hardThreshold: 30,
+  softThreshold: 52,
+  strongThreshold: 92,
+  floodThreshold: 44,
+  erosionIterations: 1,
+  dilationIterations: 2,
+  blurIterations: 2,
+  featherIterations: 1,
+};
+
+const srgbChannelToLinear = (value: number): number => {
+  const v = value / 255;
+  return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+};
+
+const rgbToLab = (r: number, g: number, b: number): [number, number, number] => {
+  const lr = srgbChannelToLinear(r);
+  const lg = srgbChannelToLinear(g);
+  const lb = srgbChannelToLinear(b);
+
+  const x = lr * 0.4124 + lg * 0.3576 + lb * 0.1805;
+  const y = lr * 0.2126 + lg * 0.7152 + lb * 0.0722;
+  const z = lr * 0.0193 + lg * 0.1192 + lb * 0.9505;
+
+  const xNorm = x / 0.95047;
+  const yNorm = y;
+  const zNorm = z / 1.08883;
+
+  const pivot = (t: number) => (t > 0.008856 ? Math.cbrt(t) : (t * 7.787) + 16 / 116);
+
+  const fx = pivot(xNorm);
+  const fy = pivot(yNorm);
+  const fz = pivot(zNorm);
+
+  const l = Math.max(0, 116 * fy - 16);
+  const a = 500 * (fx - fy);
+  const labB = 200 * (fy - fz);
+
+  return [l, a, labB];
+};
+
+const deltaE = (labA: [number, number, number], labB: [number, number, number]): number => {
+  const dl = labA[0] - labB[0];
+  const da = labA[1] - labB[1];
+  const db = labA[2] - labB[2];
+  return Math.sqrt(dl * dl + da * da + db * db);
+};
+
+const clamp01 = (value: number): number => Math.min(1, Math.max(0, value));
+
+const applyMorphology = (
+  mask: Float32Array,
+  width: number,
+  height: number,
+  iterations: number,
+  mode: MorphologyMode
+) => {
+  if (iterations <= 0) {
+    return;
+  }
+
+  const temp = new Float32Array(mask.length);
+
+  for (let iter = 0; iter < iterations; iter += 1) {
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        let accumulator = mode === 'dilate' ? 0 : 1;
+
+        for (let offsetY = -1; offsetY <= 1; offsetY += 1) {
+          const ny = y + offsetY;
+          if (ny < 0 || ny >= height) {
+            continue;
+          }
+          for (let offsetX = -1; offsetX <= 1; offsetX += 1) {
+            const nx = x + offsetX;
+            if (nx < 0 || nx >= width) {
+              continue;
+            }
+            const neighbor = mask[ny * width + nx];
+            accumulator = mode === 'dilate'
+              ? Math.max(accumulator, neighbor)
+              : Math.min(accumulator, neighbor);
+          }
+        }
+
+        temp[y * width + x] = accumulator;
+      }
+    }
+
+    mask.set(temp);
+  }
+};
+
+const blurMask = (mask: Float32Array, width: number, height: number, iterations: number) => {
+  if (iterations <= 0) {
+    return;
+  }
+
+  const temp = new Float32Array(mask.length);
+
+  for (let iter = 0; iter < iterations; iter += 1) {
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        let sum = 0;
+        let count = 0;
+
+        for (let offsetY = -1; offsetY <= 1; offsetY += 1) {
+          const ny = y + offsetY;
+          if (ny < 0 || ny >= height) {
+            continue;
+          }
+          for (let offsetX = -1; offsetX <= 1; offsetX += 1) {
+            const nx = x + offsetX;
+            if (nx < 0 || nx >= width) {
+              continue;
+            }
+
+            sum += mask[ny * width + nx];
+            count += 1;
+          }
+        }
+
+        temp[y * width + x] = sum / Math.max(1, count);
+      }
+    }
+
+    mask.set(temp);
+  }
+};
+const PAPER_API_BASE_URL = process.env.NEXT_PUBLIC_PAPER_API_BASE?.trim() ?? null;
+const NORMALIZED_PAPER_API_BASE_URL = PAPER_API_BASE_URL ? PAPER_API_BASE_URL.replace(/\/+$/, '') : null;
+
 export default function Home() {
   const [selectedPaper, setSelectedPaper] = useState('レザック白');
   const [selectedFoil, setSelectedFoil] = useState('なし');
@@ -84,6 +234,9 @@ export default function Home() {
       alert('プレビューエリアが見つかりません');
       return;
     }
+
+    previewElement.classList.add('exporting');
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
     try {
       // 高品質キャプチャのためにスケール調整
@@ -244,6 +397,8 @@ export default function Home() {
     } catch (error) {
       console.error('PDF生成エラー:', error);
       alert('PDF生成中にエラーが発生しました');
+    } finally {
+      previewElement.classList.remove('exporting');
     }
   };
   const fonts = [
@@ -259,69 +414,192 @@ export default function Home() {
   ];
   const foilOptions = ['なし', '金箔', '銀箔', 'スミ（黒）'];
 
-  // 紙色データを取得
+      // 紙色データを取得
+
   useEffect(() => {
-    const fetchPaperColors = async () => {
-      console.log('用紙データを取得中...');
-      try {
-        // 公式紙見本データを優先して取得
-        const officialResponse = await axios.get('http://localhost:5000/api/official_colors');
-        console.log('公式紙色データ取得成功:', officialResponse.data);
-        const officialColors = officialResponse.data.colors || [];
-        
-        const paperData = officialColors.map((color: ApiColorResponse) => ({
-          name: color.name,
-          hex: color.average_color?.hex || '#ffffff',
-          brand: color.brand,
-          thumbnailUrl: color.thumbnail_url || '',
-          imageFile: color.official_image,
-          localImageUrl: color.local_image_url,
-          isOfficial: true
-        }));
-        
-        console.log('処理された用紙データ:', paperData);
-        setPapers(paperData);
-        
-        // デフォルトで最初の色を選択
-        if (paperData.length > 0) {
-          setSelectedPaper(paperData[0].name);
-        }
-      } catch (error) {
-        console.error('公式紙色データの取得に失敗しました。スクレイピングデータを使用します:', error);
-        
-        // フォールバック：スクレイピングデータを使用
-        try {
-          const response = await axios.get('http://localhost:5000/api/colors');
-          const colors = response.data.colors || [];
-          
-          const paperData = colors.map((color: ApiColorResponse) => ({
-            name: color.name,
-            hex: color.average_color?.hex || '#ffffff',
-            brand: color.brand || 'その他',
-            thumbnailUrl: color.thumbnail_url,
-            imageFile: color.image_file,
-            localImageUrl: color.image_file ? `http://localhost:5000/images/${color.image_file}` : null,
-            isOfficial: false
-          }));
-          
-          setPapers(paperData);
-          
-          if (paperData.length > 0) {
-            setSelectedPaper(paperData[0].name);
-          }
-        } catch (fallbackError) {
-          console.error('スクレイピングデータの取得にも失敗しました:', fallbackError);
-          setPapers([
-            { name: 'デフォルト白', hex: '#ffffff', brand: 'デフォルト', thumbnailUrl: '', imageFile: '', localImageUrl: null, isOfficial: false },
-            { name: 'デフォルト黒', hex: '#000000', brand: 'デフォルト', thumbnailUrl: '', imageFile: '', localImageUrl: null, isOfficial: false }
-          ]);
-          setSelectedPaper('デフォルト白');
-        }
+
+    let isMounted = true;
+
+
+
+    const normalizePaper = (paper: Partial<PaperColor>): PaperColor => {
+      const officialImageFile = paper.official_image || paper.imageFile || '';
+      const encodedOfficialImage = officialImageFile ? encodeURIComponent(officialImageFile) : '';
+      const rawLocalImageUrl =
+        typeof paper.localImageUrl === 'string' && paper.localImageUrl.trim().length > 0
+          ? paper.localImageUrl
+          : null;
+      const resolvedLocalImageUrl =
+        rawLocalImageUrl ?? (officialImageFile ? `/official_images/${encodedOfficialImage}` : null);
+
+      const normalized: PaperColor = {
+        name: paper.name ?? 'デフォルト白',
+        hex: paper.hex ?? '#ffffff',
+        brand: paper.brand ?? 'その他',
+        thumbnailUrl: paper.thumbnailUrl ?? '',
+        imageFile: officialImageFile,
+        localImageUrl: resolvedLocalImageUrl,
+        isOfficial: paper.isOfficial ?? false
+      };
+
+      if (officialImageFile) {
+        normalized.official_image = officialImageFile;
       }
+
+      return normalized;
     };
 
+    const applyPaperData = (paperList: PaperColor[]): boolean => {
+
+      if (!isMounted || paperList.length === 0) {
+
+        return false;
+
+      }
+
+
+
+      setPapers(paperList);
+
+      setSelectedPaper((prev) => {
+
+        if (prev && paperList.some((paper) => paper.name === prev)) {
+
+          return prev;
+
+        }
+
+        return paperList[0].name;
+
+      });
+
+
+
+      return true;
+
+    };
+
+
+
+    const fetchPaperColors = async () => {
+      const apiBase = NORMALIZED_PAPER_API_BASE_URL;
+      const buildRemoteImageUrl = (fileName?: string | null, route: string = '/images') => {
+        if (!apiBase || !fileName) {
+          return null;
+        }
+        const encoded = encodeURIComponent(fileName);
+        return `${apiBase}${route}/${encoded}`;
+      };
+
+      if (apiBase) {
+        try {
+          const officialResponse = await axios.get(`${apiBase}/api/official_colors`, { timeout: 6000 });
+          const officialColors = officialResponse.data.colors || [];
+
+          const officialPaperData = officialColors.map((color: ApiColorResponse) =>
+            normalizePaper({
+              name: color.name,
+              hex: color.average_color?.hex,
+              brand: color.brand,
+              thumbnailUrl: color.thumbnail_url,
+              imageFile: color.official_image || color.image_file,
+              localImageUrl:
+                color.local_image_url ??
+                (color.official_image
+                  ? buildRemoteImageUrl(color.official_image, '/official_images')
+                  : buildRemoteImageUrl(color.image_file)),
+              isOfficial: true,
+              official_image: color.official_image,
+            })
+          );
+
+          if (applyPaperData(officialPaperData)) {
+            return;
+          }
+        } catch (error) {
+          console.error('公式紙色データの取得に失敗しました。スクレイピングデータを使用します', error);
+        }
+      } else {
+        console.info('紙色APIのベースURLが設定されていないため、バンドル済みのデータを使用します。');
+      }
+
+      if (apiBase) {
+        try {
+          const response = await axios.get(`${apiBase}/api/colors`, { timeout: 6000 });
+          const colors = response.data.colors || [];
+
+          const scrapedPaperData = colors.map((color: ApiColorResponse) =>
+            normalizePaper({
+              name: color.name,
+              hex: color.average_color?.hex,
+              brand: color.brand,
+              thumbnailUrl: color.thumbnail_url,
+              imageFile: color.image_file,
+              localImageUrl:
+                color.local_image_url ?? buildRemoteImageUrl(color.image_file),
+              isOfficial: false,
+            })
+          );
+
+          if (applyPaperData(scrapedPaperData)) {
+            return;
+          }
+        } catch (fallbackError) {
+          console.error('スクレイピングデータの取得にも失敗しました', fallbackError);
+        }
+      }
+
+      try {
+        const fallbackModule = await import('@/data/official_papers_fallback.json');
+        const fallbackPaperData = (fallbackModule.default as Partial<PaperColor>[]).map((paper) =>
+          normalizePaper({
+            ...paper,
+            localImageUrl: paper?.localImageUrl ?? null,
+            isOfficial: paper?.isOfficial ?? true,
+          })
+        );
+
+        if (applyPaperData(fallbackPaperData)) {
+          console.warn('ローカルの用紙データを使用します。');
+          return;
+        }
+      } catch (localDataError) {
+        console.error('ローカルの用紙データの読み込みに失敗しました', localDataError);
+      }
+
+      applyPaperData([
+        normalizePaper({
+          name: 'デフォルト白',
+          hex: '#ffffff',
+          brand: 'デフォルト',
+          isOfficial: false,
+        }),
+        normalizePaper({
+          name: 'デフォルト黒',
+          hex: '#000000',
+          brand: 'デフォルト',
+          isOfficial: false,
+        }),
+      ]);
+    };
+
+
+
     fetchPaperColors();
+
+
+
+    return () => {
+
+      isMounted = false;
+
+    };
+
   }, []);
+
+
+
+
 
   // 色をCSSフィルターに変換する関数（改良版）
   const getColorFilter = (hexColor: string) => {
@@ -356,93 +634,242 @@ export default function Home() {
     return `sepia(1) saturate(${Math.round(saturation * 300)}%) hue-rotate(${hue}deg) brightness(${Math.round(lightness * 150)}%)`;
   };
 
-  const removeImageBackground = (imageSrc: string): Promise<string> => {
+  const removeImageBackground = (
+    imageSrc: string,
+    overrides?: Partial<BackgroundRemovalConfig>
+  ): Promise<string> => {
+    const config = { ...BACKGROUND_REMOVAL_CONFIG, ...overrides };
+
     return new Promise((resolve) => {
       const img = new Image();
+      img.crossOrigin = 'anonymous';
       img.onload = () => {
+        if (img.width === 0 || img.height === 0) {
+          resolve(imageSrc);
+          return;
+        }
+
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
+
+        if (!ctx) {
+          resolve(imageSrc);
+          return;
+        }
+
         canvas.width = img.width;
         canvas.height = img.height;
-        
-        if (ctx) {
-          ctx.drawImage(img, 0, 0);
-          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          const data = imageData.data;
-          
-          // 背景除去アルゴリズム（改良版）
-          // エッジと四隅のピクセルをサンプリング
-          const edgePixels: number[][] = [];
-          
-          // 上下のエッジ
-          for (let x = 0; x < canvas.width; x += 5) {
-            edgePixels.push([x, 0]); // 上端
-            edgePixels.push([x, canvas.height - 1]); // 下端
-          }
-          // 左右のエッジ
-          for (let y = 0; y < canvas.height; y += 5) {
-            edgePixels.push([0, y]); // 左端
-            edgePixels.push([canvas.width - 1, y]); // 右端
-          }
-          
-          // エッジピクセルの色を収集
-          const bgColors = edgePixels.map(([x, y]) => {
-            const idx = (y * canvas.width + x) * 4;
-            return [data[idx], data[idx + 1], data[idx + 2]];
-          });
-          
-          // 最頻色を背景色として判定
-          const colorMap = new Map<string, number>();
-          bgColors.forEach(([r, g, b]) => {
-            // 色をグループ化（10の倍数に丸める）
-            const key = `${Math.floor(r / 10) * 10}-${Math.floor(g / 10) * 10}-${Math.floor(b / 10) * 10}`;
-            colorMap.set(key, (colorMap.get(key) || 0) + 1);
-          });
-          
-          // 最も多い色を背景色とする
-          let maxCount = 0;
-          let dominantColor = [255, 255, 255];
-          colorMap.forEach((count, colorKey) => {
-            if (count > maxCount) {
-              maxCount = count;
-              const [r, g, b] = colorKey.split('-').map(Number);
-              dominantColor = [r, g, b];
-            }
-          });
-          
-          const tolerance = 40; // 色の許容範囲
-          
-          // 背景除去処理
-          for (let i = 0; i < data.length; i += 4) {
-            const r = data[i];
-            const g = data[i + 1];
-            const b = data[i + 2];
-            
-            // 背景色に近い色を透明にする
-            const colorDiff = Math.sqrt(
-              Math.pow(r - dominantColor[0], 2) +
-              Math.pow(g - dominantColor[1], 2) +
-              Math.pow(b - dominantColor[2], 2)
-            );
-            
-            if (colorDiff < tolerance) {
-              data[i + 3] = 0; // アルファチャンネルを0（透明）に設定
-            }
-            // 半透明処理（境界をなめらかにする）
-            else if (colorDiff < tolerance * 1.5) {
-              const alpha = Math.max(0, Math.min(255, 255 * (colorDiff - tolerance) / (tolerance * 0.5)));
-              data[i + 3] = alpha;
-            }
-          }
-          
-          ctx.putImageData(imageData, 0, 0);
-          resolve(canvas.toDataURL('image/png'));
+
+        ctx.drawImage(img, 0, 0);
+
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const { data } = imageData;
+        const { width, height } = canvas;
+        const totalPixels = width * height;
+
+        if (totalPixels === 0) {
+          resolve(imageSrc);
+          return;
         }
+
+        const labBuffer = new Float32Array(totalPixels * 3);
+        for (let i = 0; i < totalPixels; i += 1) {
+          const offset = i * 4;
+          const lab = rgbToLab(data[offset], data[offset + 1], data[offset + 2]);
+          const labOffset = i * 3;
+          labBuffer[labOffset] = lab[0];
+          labBuffer[labOffset + 1] = lab[1];
+          labBuffer[labOffset + 2] = lab[2];
+        }
+
+        const edgeStepX = Math.max(1, Math.floor(width / config.targetSampleCountPerEdge));
+        const edgeStepY = Math.max(1, Math.floor(height / config.targetSampleCountPerEdge));
+
+        const colorBins = new Map<string, { count: number; lab: [number, number, number] }>();
+        const registerSample = (pixelIndex: number) => {
+          if (pixelIndex < 0 || pixelIndex >= totalPixels) {
+            return;
+          }
+
+          const labOffset = pixelIndex * 3;
+          const lab: [number, number, number] = [
+            labBuffer[labOffset],
+            labBuffer[labOffset + 1],
+            labBuffer[labOffset + 2],
+          ];
+          const key = [
+            Math.round(lab[0] / config.quantizationStep),
+            Math.round(lab[1] / config.quantizationStep),
+            Math.round(lab[2] / config.quantizationStep),
+          ].join(':');
+
+          const entry = colorBins.get(key);
+          if (entry) {
+            entry.count += 1;
+            entry.lab[0] += lab[0];
+            entry.lab[1] += lab[1];
+            entry.lab[2] += lab[2];
+          } else {
+            colorBins.set(key, { count: 1, lab: [...lab] as [number, number, number] });
+          }
+        };
+
+        for (let x = 0; x < width; x += edgeStepX) {
+          registerSample(x);
+          registerSample((height - 1) * width + x);
+        }
+
+        for (let y = 0; y < height; y += edgeStepY) {
+          registerSample(y * width);
+          registerSample(y * width + (width - 1));
+        }
+
+        let backgroundLab: [number, number, number] = [50, 0, 0];
+        if (colorBins.size > 0) {
+          let bestEntry: { count: number; lab: [number, number, number] } | null = null;
+          colorBins.forEach((entry) => {
+            if (!bestEntry || entry.count > bestEntry.count) {
+              bestEntry = entry;
+            }
+          });
+
+          if (bestEntry) {
+            backgroundLab = [
+              bestEntry.lab[0] / bestEntry.count,
+              bestEntry.lab[1] / bestEntry.count,
+              bestEntry.lab[2] / bestEntry.count,
+            ];
+          }
+        } else {
+          let sumL = 0;
+          let sumA = 0;
+          let sumB = 0;
+
+          for (let i = 0; i < totalPixels; i += 1) {
+            const labOffset = i * 3;
+            sumL += labBuffer[labOffset];
+            sumA += labBuffer[labOffset + 1];
+            sumB += labBuffer[labOffset + 2];
+          }
+
+          backgroundLab = [sumL / totalPixels, sumA / totalPixels, sumB / totalPixels];
+        }
+
+        const mask = new Float32Array(totalPixels);
+
+        const hard = config.hardThreshold;
+        const soft = config.softThreshold;
+        const strong = config.strongThreshold;
+
+        for (let i = 0; i < totalPixels; i += 1) {
+          const labOffset = i * 3;
+          const lab: [number, number, number] = [
+            labBuffer[labOffset],
+            labBuffer[labOffset + 1],
+            labBuffer[labOffset + 2],
+          ];
+          const diff = deltaE(lab, backgroundLab);
+
+          if (diff <= hard) {
+            mask[i] = 0;
+          } else if (diff >= strong) {
+            mask[i] = 1;
+          } else if (diff <= soft) {
+            const normalized = (diff - hard) / Math.max(1, soft - hard);
+            mask[i] = clamp01(normalized * 0.35);
+          } else {
+            const normalized = (diff - soft) / Math.max(1, strong - soft);
+            mask[i] = clamp01(0.35 + normalized * 0.65);
+          }
+        }
+
+        const visited = new Uint8Array(totalPixels);
+        const queue = new Uint32Array(totalPixels);
+        let qStart = 0;
+        let qEnd = 0;
+
+        const tryEnqueue = (x: number, y: number) => {
+          if (x < 0 || y < 0 || x >= width || y >= height) {
+            return;
+          }
+
+          const index = y * width + x;
+          if (visited[index]) {
+            return;
+          }
+
+          const labOffset = index * 3;
+          const lab: [number, number, number] = [
+            labBuffer[labOffset],
+            labBuffer[labOffset + 1],
+            labBuffer[labOffset + 2],
+          ];
+          if (deltaE(lab, backgroundLab) <= config.floodThreshold) {
+            visited[index] = 1;
+            queue[qEnd] = index;
+            qEnd += 1;
+          }
+        };
+
+        for (let x = 0; x < width; x += edgeStepX) {
+          tryEnqueue(x, 0);
+          tryEnqueue(x, height - 1);
+        }
+        for (let y = 0; y < height; y += edgeStepY) {
+          tryEnqueue(0, y);
+          tryEnqueue(width - 1, y);
+        }
+
+        const neighborOffsets = [
+          [1, 0],
+          [-1, 0],
+          [0, 1],
+          [0, -1],
+          [1, 1],
+          [-1, 1],
+          [1, -1],
+          [-1, -1],
+        ] as const;
+
+        while (qStart < qEnd) {
+          const index = queue[qStart];
+          qStart += 1;
+
+          mask[index] = 0;
+
+          const baseX = index % width;
+          const baseY = Math.floor(index / width);
+
+          for (const [dx, dy] of neighborOffsets) {
+            tryEnqueue(baseX + dx, baseY + dy);
+          }
+        }
+
+        applyMorphology(mask, width, height, config.dilationIterations, 'dilate');
+        applyMorphology(mask, width, height, config.erosionIterations, 'erode');
+        blurMask(mask, width, height, config.blurIterations);
+
+        if (config.featherIterations > 0) {
+          for (let iter = 0; iter < config.featherIterations; iter += 1) {
+            for (let i = 0; i < totalPixels; i += 1) {
+              mask[i] = clamp01(Math.pow(mask[i], 0.85));
+            }
+          }
+        }
+
+        for (let i = 0; i < totalPixels; i += 1) {
+          const alpha = Math.round(clamp01(mask[i]) * 255);
+          data[i * 4 + 3] = alpha;
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+        resolve(canvas.toDataURL('image/png'));
       };
+
+      img.onerror = () => resolve(imageSrc);
       img.src = imageSrc;
     });
   };
-
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>, removeBg: boolean = false) => {
     const file = e.target.files?.[0];
     if (file) {
