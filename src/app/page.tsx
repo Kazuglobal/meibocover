@@ -911,7 +911,26 @@ export default function Home() {
         }
 
         ctx.putImageData(imageData, 0, 0);
-        resolve(canvas.toDataURL('image/png'));
+
+        const outputCanvas = document.createElement('canvas');
+        const outputCtx = outputCanvas.getContext('2d');
+
+        if (!outputCtx) {
+          resolve(canvas.toDataURL('image/png'));
+          return;
+        }
+
+        outputCanvas.width = img.width;
+        outputCanvas.height = img.height;
+        outputCtx.drawImage(img, 0, 0);
+        outputCtx.globalCompositeOperation = 'destination-in';
+        outputCtx.imageSmoothingEnabled = true;
+        outputCtx.imageSmoothingQuality = 'high';
+        // Apply the low-res alpha mask onto the original image so we keep full-resolution RGB data.
+        outputCtx.drawImage(canvas, 0, 0, img.width, img.height);
+        outputCtx.globalCompositeOperation = 'source-over';
+
+        resolve(outputCanvas.toDataURL('image/png'));
       };
 
       img.onerror = () => resolve(imageSrc);
