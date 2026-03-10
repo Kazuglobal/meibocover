@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Upload, Plus, Type, Download } from 'lucide-react';
 import axios from 'axios';
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
 interface TextElement {
@@ -357,7 +357,7 @@ export default function Home() {
       const y = (pdfHeight - scaledHeight) / 2;
 
       // PDFに高解像度画像を追加
-      pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight, '', 'FAST');
+      pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight, '', 'NONE');
 
       // 2ページ目に仕様情報を追加（Canvas使用で日本語対応）
       pdf.addPage();
@@ -368,10 +368,12 @@ export default function Home() {
       // 仕様情報用のCanvasを作成（高解像度）
       const specCanvas = document.createElement('canvas');
       const specScale = 2; // 仕様ページも高解像度化
-      specCanvas.width = 600 * specScale;
-      specCanvas.height = 800 * specScale;
+      const specLogicalWidth = 600;
+      const specLogicalHeight = 800;
+      specCanvas.width = specLogicalWidth * specScale;
+      specCanvas.height = specLogicalHeight * specScale;
       const ctx = specCanvas.getContext('2d');
-      
+
       if (ctx) {
         // 高DPI対応
         ctx.scale(specScale, specScale);
@@ -379,7 +381,7 @@ export default function Home() {
         ctx.imageSmoothingQuality = 'high';
         // 背景を白に設定
         ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, specCanvas.width, specCanvas.height);
+        ctx.fillRect(0, 0, specLogicalWidth, specLogicalHeight);
         
         // 日本語フォントを設定
         ctx.fillStyle = 'black';
@@ -425,7 +427,7 @@ export default function Home() {
         
         // 生成日時
         ctx.font = '12px "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif';
-        ctx.fillText(`生成日時: ${now.toLocaleString('ja-JP')}`, 30, specCanvas.height - 30);
+        ctx.fillText(`生成日時: ${now.toLocaleString('ja-JP')}`, 30, specLogicalHeight - 30);
         
         // CanvasをPDFに追加
         const specImgData = specCanvas.toDataURL('image/png');
