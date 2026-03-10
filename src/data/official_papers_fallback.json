@@ -10,16 +10,6 @@
     "official_image": "レザック66あおたけ.png"
   },
   {
-    "name": "レザック66あおねず",
-    "hex": "#89accd",
-    "brand": "レザック66",
-    "thumbnailUrl": "",
-    "imageFile": "レザック66あおねず.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック66あおねず.png"
-  },
-  {
     "name": "レザック66あか",
     "hex": "#e43031",
     "brand": "レザック66",
@@ -98,16 +88,6 @@
     "localImageUrl": null,
     "isOfficial": true,
     "official_image": "レザック66きいろ.png"
-  },
-  {
-    "name": "レザック66きんちゃ",
-    "hex": "#e9a039",
-    "brand": "レザック66",
-    "thumbnailUrl": "",
-    "imageFile": "レザック66きんちゃ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック66きんちゃ.png"
   },
   {
     "name": "レザック66ぎんねず",
@@ -210,36 +190,6 @@
     "official_image": "レザック66たまご.png"
   },
   {
-    "name": "レザック66だいだい",
-    "hex": "#ed792a",
-    "brand": "レザック66",
-    "thumbnailUrl": "",
-    "imageFile": "レザック66だいだい.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック66だいだい.png"
-  },
-  {
-    "name": "レザック66ちゃいろ",
-    "hex": "#d39252",
-    "brand": "レザック66",
-    "thumbnailUrl": "",
-    "imageFile": "レザック66ちゃいろ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック66ちゃいろ.png"
-  },
-  {
-    "name": "レザック66ねずみ",
-    "hex": "#a19581",
-    "brand": "レザック66",
-    "thumbnailUrl": "",
-    "imageFile": "レザック66ねずみ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック66ねずみ.png"
-  },
-  {
     "name": "レザック66ふじ",
     "hex": "#8ea4d5",
     "brand": "レザック66",
@@ -260,16 +210,6 @@
     "official_image": "レザック66べに.png"
   },
   {
-    "name": "レザック66ぼたん",
-    "hex": "#af326d",
-    "brand": "レザック66",
-    "thumbnailUrl": "",
-    "imageFile": "レザック66ぼたん.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック66ぼたん.png"
-  },
-  {
     "name": "レザック66みずいろ",
     "hex": "#d4e8ed",
     "brand": "レザック66",
@@ -278,16 +218,6 @@
     "localImageUrl": null,
     "isOfficial": true,
     "official_image": "レザック66みずいろ.png"
-  },
-  {
-    "name": "レザック66むらさき",
-    "hex": "#9570b1",
-    "brand": "レザック66",
-    "thumbnailUrl": "",
-    "imageFile": "レザック66むらさき.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック66むらさき.png"
   },
   {
     "name": "レザック66もも",
@@ -328,26 +258,6 @@
     "localImageUrl": null,
     "isOfficial": true,
     "official_image": "レザック66アボガド.png"
-  },
-  {
-    "name": "レザック66アーモンド",
-    "hex": "#f9e0c7",
-    "brand": "レザック66",
-    "thumbnailUrl": "",
-    "imageFile": "レザック66アーモンド.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック66アーモンド.png"
-  },
-  {
-    "name": "レザック66オリーブ",
-    "hex": "#918f41",
-    "brand": "レザック66",
-    "thumbnailUrl": "",
-    "imageFile": "レザック66オリーブ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック66オリーブ.png"
   },
   {
     "name": "レザック66オークル",
@@ -510,26 +420,6 @@
     "official_image": "レザック80つむぎあい.png"
   },
   {
-    "name": "レザック80つむぎあお",
-    "hex": "#849ec6",
-    "brand": "レザック80つむぎ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック80つむぎあお.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック80つむぎあお.png"
-  },
-  {
-    "name": "レザック80つむぎあおねず",
-    "hex": "#a1a4ab",
-    "brand": "レザック80つむぎ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック80つむぎあおねず.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック80つむぎあおねず.png"
-  },
-  {
     "name": "レザック80つむぎあさぎ",
     "hex": "#8ec8cb",
     "brand": "レザック80つむぎ",
@@ -670,16 +560,6 @@
     "official_image": "レザック80つむぎしゅ.png"
   },
   {
-    "name": "レザック80つむぎしらちゃ",
-    "hex": "#d5b091",
-    "brand": "レザック80つむぎ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック80つむぎしらちゃ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック80つむぎしらちゃ.png"
-  },
-  {
     "name": "レザック80つむぎしろ",
     "hex": "#f9f6e9",
     "brand": "レザック80つむぎ",
@@ -730,26 +610,6 @@
     "official_image": "レザック80つむぎだいだい.png"
   },
   {
-    "name": "レザック80つむぎつゆくさ",
-    "hex": "#358dbf",
-    "brand": "レザック80つむぎ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック80つむぎつゆくさ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック80つむぎつゆくさ.png"
-  },
-  {
-    "name": "レザック80つむぎはだ",
-    "hex": "#f6ddaa",
-    "brand": "レザック80つむぎ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック80つむぎはだ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック80つむぎはだ.png"
-  },
-  {
     "name": "レザック80つむぎひすい",
     "hex": "#0bbfb1",
     "brand": "レザック80つむぎ",
@@ -758,16 +618,6 @@
     "localImageUrl": null,
     "isOfficial": true,
     "official_image": "レザック80つむぎひすい.png"
-  },
-  {
-    "name": "レザック80つむぎふじ",
-    "hex": "#9792a3",
-    "brand": "レザック80つむぎ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック80つむぎふじ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック80つむぎふじ.png"
   },
   {
     "name": "レザック80つむぎべに",
@@ -840,16 +690,6 @@
     "official_image": "レザック80つむぎよもぎ.png"
   },
   {
-    "name": "レザック80つむぎらくだ",
-    "hex": "#d5af85",
-    "brand": "レザック80つむぎ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック80つむぎらくだ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック80つむぎらくだ.png"
-  },
-  {
     "name": "レザック80つむぎわかくさ",
     "hex": "#a0d2b4",
     "brand": "レザック80つむぎ",
@@ -870,36 +710,6 @@
     "official_image": "レザック80つむぎんねず.png"
   },
   {
-    "name": "レザック82ろうけつあい",
-    "hex": "#4b70b0",
-    "brand": "レザック82ろうけつ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック82ろうけつあい.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック82ろうけつあい.png"
-  },
-  {
-    "name": "レザック82ろうけつあさぎ",
-    "hex": "#99cec3",
-    "brand": "レザック82ろうけつ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック82ろうけつあさぎ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック82ろうけつあさぎ.png"
-  },
-  {
-    "name": "レザック82ろうけつこがね",
-    "hex": "#f1bd4f",
-    "brand": "レザック82ろうけつ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック82ろうけつこがね.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック82ろうけつこがね.png"
-  },
-  {
     "name": "レザック82ろうけつこそめ",
     "hex": "#d0b983",
     "brand": "レザック82ろうけつ",
@@ -908,26 +718,6 @@
     "localImageUrl": null,
     "isOfficial": true,
     "official_image": "レザック82ろうけつこそめ.png"
-  },
-  {
-    "name": "レザック82ろうけつしゅ",
-    "hex": "#e14b35",
-    "brand": "レザック82ろうけつ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック82ろうけつしゅ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック82ろうけつしゅ.png"
-  },
-  {
-    "name": "レザック82ろうけつしらちゃ",
-    "hex": "#c3906d",
-    "brand": "レザック82ろうけつ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック82ろうけつしらちゃ.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック82ろうけつしらちゃ.png"
   },
   {
     "name": "レザック82ろうけつしろ",
@@ -978,25 +768,5 @@
     "localImageUrl": null,
     "isOfficial": true,
     "official_image": "レザック82ろうけつはだ.png"
-  },
-  {
-    "name": "レザック82ろうけつみず",
-    "hex": "#88b0c0",
-    "brand": "レザック82ろうけつ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック82ろうけつみず.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック82ろうけつみず.png"
-  },
-  {
-    "name": "レザック82ろうけつみどり",
-    "hex": "#819758",
-    "brand": "レザック82ろうけつ",
-    "thumbnailUrl": "",
-    "imageFile": "レザック82ろうけつみどり.png",
-    "localImageUrl": null,
-    "isOfficial": true,
-    "official_image": "レザック82ろうけつみどり.png"
   }
 ]

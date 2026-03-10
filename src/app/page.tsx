@@ -198,6 +198,51 @@ const blurMask = (mask: Float32Array, width: number, height: number, iterations:
     mask.set(temp);
   }
 };
+
+const BACKGROUND_REMOVAL_MAX_DIMENSION = 1600;
+const BACKGROUND_REMOVAL_MAX_PIXELS = 1600 * 1600;
+
+const isSafeNavigationUrl = (value?: string | null): value is string => {
+  if (typeof value !== 'string') {
+    return false;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return false;
+  }
+
+  if (/^(javascript|data|vbscript):/i.test(trimmed)) {
+    return false;
+  }
+
+  if (trimmed.startsWith('/')) {
+    return true;
+  }
+
+  try {
+    const parsed = new URL(trimmed);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
+const getBackgroundRemovalSize = (width: number, height: number) => {
+  if (width <= 0 || height <= 0) {
+    return { width: 0, height: 0 };
+  }
+
+  const longestSideScale = Math.min(1, BACKGROUND_REMOVAL_MAX_DIMENSION / Math.max(width, height));
+  const pixelScale = Math.min(1, Math.sqrt(BACKGROUND_REMOVAL_MAX_PIXELS / (width * height)));
+  const scale = Math.min(longestSideScale, pixelScale);
+
+  return {
+    width: Math.max(1, Math.round(width * scale)),
+    height: Math.max(1, Math.round(height * scale)),
+  };
+};
+
 const PAPER_API_BASE_URL = process.env.NEXT_PUBLIC_PAPER_API_BASE?.trim() ?? null;
 const NORMALIZED_PAPER_API_BASE_URL = PAPER_API_BASE_URL ? PAPER_API_BASE_URL.replace(/\/+$/, '') : null;
 
@@ -211,7 +256,7 @@ export default function Home() {
   const [logoElements, setLogoElements] = useState<LogoElement[]>([]);
   const [selectedElement, setSelectedElement] = useState<string | null>(null);
   const [selectedElementType, setSelectedElementType] = useState<'text' | 'logo' | null>(null);
-  const dragRef = useRef<{ offsetX: number; offsetY: number } | null>(null);
+  const dragRef = useRef<{ offsetX: number; offsetY: number; width: number; height: number } | null>(null);
 
   const [papers, setPapers] = useState<PaperColor[]>([]);
 
@@ -436,7 +481,7 @@ export default function Home() {
         name: paper.name ?? 'デフォルト白',
         hex: paper.hex ?? '#ffffff',
         brand: paper.brand ?? 'その他',
-        thumbnailUrl: paper.thumbnailUrl ?? '',
+        thumbnailUrl: isSafeNavigationUrl(paper.thumbnailUrl) ? paper.thumbnailUrl : '',
         imageFile: officialImageFile,
         localImageUrl: resolvedLocalImageUrl,
         isOfficial: paper.isOfficial ?? false
@@ -657,10 +702,16 @@ export default function Home() {
           return;
         }
 
-        canvas.width = img.width;
-        canvas.height = img.height;
+        const processingSize = getBackgroundRemovalSize(img.width, img.height);
+        if (processingSize.width === 0 || processingSize.height === 0) {
+          resolve(imageSrc);
+          return;
+        }
 
-        ctx.drawImage(img, 0, 0);
+        canvas.width = processingSize.width;
+        canvas.height = processingSize.height;
+
+        ctx.drawImage(img, 0, 0, processingSize.width, processingSize.height);
 
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const { data } = imageData;
@@ -860,7 +911,26 @@ export default function Home() {
         }
 
         ctx.putImageData(imageData, 0, 0);
-        resolve(canvas.toDataURL('image/png'));
+
+        const outputCanvas = document.createElement('canvas');
+        const outputCtx = outputCanvas.getContext('2d');
+
+        if (!outputCtx) {
+          resolve(canvas.toDataURL('image/png'));
+          return;
+        }
+
+        outputCanvas.width = img.width;
+        outputCanvas.height = img.height;
+        outputCtx.drawImage(img, 0, 0);
+        outputCtx.globalCompositeOperation = 'destination-in';
+        outputCtx.imageSmoothingEnabled = true;
+        outputCtx.imageSmoothingQuality = 'high';
+        // Apply the low-res alpha mask onto the original image so we keep full-resolution RGB data.
+        outputCtx.drawImage(canvas, 0, 0, img.width, img.height);
+        outputCtx.globalCompositeOperation = 'source-over';
+
+        resolve(outputCanvas.toDataURL('image/png'));
       };
 
       img.onerror = () => resolve(imageSrc);
@@ -894,7 +964,7 @@ export default function Home() {
           color: '#000000',
           hasBackground: !removeBg
         };
-        setLogoElements([...logoElements, newLogo]);
+        setLogoElements((prev) => [...prev, newLogo]);
       };
       reader.readAsDataURL(file);
     }
@@ -910,17 +980,17 @@ export default function Home() {
       size: 16,
       isDragging: false
     };
-    setTextElements([...textElements, newElement]);
+    setTextElements((prev) => [...prev, newElement]);
   };
 
   const updateTextElement = (id: string, updates: Partial<TextElement>) => {
-    setTextElements(textElements.map(el => 
+    setTextElements((prev) => prev.map(el => 
       el.id === id ? { ...el, ...updates } : el
     ));
   };
 
   const updateLogoElement = (id: string, updates: Partial<LogoElement>) => {
-    setLogoElements(logoElements.map(el => 
+    setLogoElements((prev) => prev.map(el => 
       el.id === id ? { ...el, ...updates } : el
     ));
   };
@@ -965,7 +1035,9 @@ export default function Home() {
 
     dragRef.current = {
       offsetX: position.clientX - rect.left,
-      offsetY: position.clientY - rect.top
+      offsetY: position.clientY - rect.top,
+      width: rect.width,
+      height: rect.height,
     };
 
     if (type === 'text') {
@@ -995,8 +1067,10 @@ export default function Home() {
     }
 
     const previewRect = event.currentTarget.getBoundingClientRect();
-    const x = ((position.clientX - previewRect.left) / previewRect.width) * 100;
-    const y = ((position.clientY - previewRect.top) / previewRect.height) * 100;
+    const pointerCenterX = position.clientX - previewRect.left - dragRef.current.offsetX + (dragRef.current.width / 2);
+    const pointerCenterY = position.clientY - previewRect.top - dragRef.current.offsetY + (dragRef.current.height / 2);
+    const x = (pointerCenterX / previewRect.width) * 100;
+    const y = (pointerCenterY / previewRect.height) * 100;
 
     if (draggingTextElement) {
       updateTextElement(draggingTextElement.id, {
@@ -1012,35 +1086,33 @@ export default function Home() {
   };
 
   const handlePointerUp = () => {
-    textElements.forEach(el => {
-      if (el.isDragging) {
-        updateTextElement(el.id, { isDragging: false });
-      }
-    });
-    logoElements.forEach(el => {
-      if (el.isDragging) {
-        updateLogoElement(el.id, { isDragging: false });
-      }
-    });
+    setTextElements((prev) => prev.map((el) => (
+      el.isDragging ? { ...el, isDragging: false } : el
+    )));
+    setLogoElements((prev) => prev.map((el) => (
+      el.isDragging ? { ...el, isDragging: false } : el
+    )));
     dragRef.current = null;
   };
 
   const deleteTextElement = (id: string) => {
     if (id !== 'title' && id !== 'subtitle') {
-      setTextElements(textElements.filter(el => el.id !== id));
+      setTextElements((prev) => prev.filter(el => el.id !== id));
       setSelectedElement(null);
       setSelectedElementType(null);
     }
   };
 
   const deleteLogoElement = (id: string) => {
-    setLogoElements(logoElements.filter(el => el.id !== id));
+    setLogoElements((prev) => prev.filter(el => el.id !== id));
     setSelectedElement(null);
     setSelectedElementType(null);
   };
 
   const selectedTextData = selectedElementType === 'text' ? textElements.find(el => el.id === selectedElement) : null;
   const selectedLogoData = selectedElementType === 'logo' ? logoElements.find(el => el.id === selectedElement) : null;
+  const selectedPaperData = papers.find((paper) => paper.name === selectedPaper);
+  const selectedPaperLink = isSafeNavigationUrl(selectedPaperData?.thumbnailUrl) ? selectedPaperData.thumbnailUrl : null;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -1174,12 +1246,12 @@ export default function Home() {
                   <div 
                     className="w-8 h-8 rounded border shadow-sm relative overflow-hidden"
                     style={{ 
-                      backgroundColor: papers.find(p => p.name === selectedPaper)?.hex || '#ffffff'
+                      backgroundColor: selectedPaperData?.hex || '#ffffff'
                     }}
                   >
-                    {papers.find(p => p.name === selectedPaper)?.localImageUrl && (
+                    {selectedPaperData?.localImageUrl && (
                       <img
-                        src={papers.find(p => p.name === selectedPaper)?.localImageUrl || ''}
+                        src={selectedPaperData.localImageUrl}
                         alt={selectedPaper}
                         className="w-full h-full object-cover"
                         onError={(e) => {
@@ -1191,7 +1263,7 @@ export default function Home() {
                   <div className="text-sm">
                     <div className="font-medium">{selectedPaper}</div>
                     <div className="text-gray-500">
-                      {papers.find(p => p.name === selectedPaper)?.hex || '#ffffff'}
+                      {selectedPaperData?.hex || '#ffffff'}
                     </div>
                   </div>
                 </div>
@@ -1465,9 +1537,9 @@ export default function Home() {
                 <div 
                   className="aspect-[3/4] w-80 border-2 rounded-lg shadow-lg relative overflow-hidden cursor-crosshair preview-container"
                   style={{
-                    backgroundColor: papers.find(p => p.name === selectedPaper)?.hex || '#ffffff',
-                    backgroundImage: papers.find(p => p.name === selectedPaper)?.localImageUrl 
-                      ? `url(${papers.find(p => p.name === selectedPaper)?.localImageUrl})`
+                    backgroundColor: selectedPaperData?.hex || '#ffffff',
+                    backgroundImage: selectedPaperData?.localImageUrl
+                      ? `url(${selectedPaperData.localImageUrl})`
                       : 'none',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
@@ -1566,15 +1638,13 @@ export default function Home() {
                       return 'normal';
                     })(),
                     color: (() => {
-                      const currentPaper = papers.find(p => p.name === selectedPaper);
-                      
                       if (selectedFoil === '金箔') return '#fbbf24';
                       if (selectedFoil === '銀箔') return '#d1d5db';
                       if (selectedFoil === 'スミ（黒）') return '#000000';
                       
                       // RGB値から明度を判定
-                      if (currentPaper?.hex) {
-                        const hex = currentPaper.hex.replace('#', '');
+                      if (selectedPaperData?.hex) {
+                        const hex = selectedPaperData.hex.replace('#', '');
                         const r = parseInt(hex.substr(0, 2), 16);
                         const g = parseInt(hex.substr(2, 2), 16);
                         const b = parseInt(hex.substr(4, 2), 16);
@@ -1634,11 +1704,11 @@ export default function Home() {
                       <div className="flex items-center gap-3 mb-3">
                         <div className="font-medium text-lg">{selectedPaper}</div>
                         <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                          {papers.find(p => p.name === selectedPaper)?.brand}
+                          {selectedPaperData?.brand}
                         </span>
                       </div>
                       <div className="text-sm text-gray-600">
-                        色コード: {papers.find(p => p.name === selectedPaper)?.hex}
+                        色コード: {selectedPaperData?.hex}
                       </div>
                     </div>
 
@@ -1646,19 +1716,19 @@ export default function Home() {
                     <div className="bg-white p-4 rounded-lg border shadow-sm">
                       <div className="flex items-center justify-between mb-3">
                         <h4 className="text-sm font-medium text-gray-700">公式紙見本</h4>
-                        {papers.find(p => p.name === selectedPaper)?.isOfficial && (
+                        {selectedPaperData?.isOfficial && (
                           <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
                             ✓ 高品質
                           </span>
                         )}
                       </div>
                       
-                      {papers.find(p => p.name === selectedPaper)?.localImageUrl ? (
+                      {selectedPaperData?.localImageUrl ? (
                         <div className="space-y-3">
                           {/* 大きな一枚表示 */}
                           <div className="flex justify-center">
                             <img
-                              src={papers.find(p => p.name === selectedPaper)?.localImageUrl || ''}
+                              src={selectedPaperData.localImageUrl}
                               alt={selectedPaper}
                               className="max-w-full h-auto border rounded-lg shadow-lg"
                               style={{ 
@@ -1681,10 +1751,10 @@ export default function Home() {
                           </div>
                           
                           {/* 外部リンク */}
-                          {papers.find(p => p.name === selectedPaper)?.thumbnailUrl && (
+                          {selectedPaperLink && (
                             <div className="text-center">
                               <a 
-                                href={papers.find(p => p.name === selectedPaper)?.thumbnailUrl}
+                                href={selectedPaperLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-sm text-blue-600 hover:text-blue-800 underline inline-flex items-center gap-1"
@@ -1699,7 +1769,7 @@ export default function Home() {
                           <div className="mb-4">画像がありません</div>
                           <div 
                             className="w-full h-32 border rounded-lg flex items-center justify-center"
-                            style={{ backgroundColor: papers.find(p => p.name === selectedPaper)?.hex || '#ffffff' }}
+                            style={{ backgroundColor: selectedPaperData?.hex || '#ffffff' }}
                           >
                             <span className="text-sm text-gray-600">カラーコードのみ</span>
                           </div>
