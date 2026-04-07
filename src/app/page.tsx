@@ -259,6 +259,8 @@ export default function Home() {
   const dragRef = useRef<{ offsetX: number; offsetY: number; width: number; height: number } | null>(null);
 
   const [papers, setPapers] = useState<PaperColor[]>([]);
+  const [isPaperDropdownOpen, setIsPaperDropdownOpen] = useState(false);
+  const paperDropdownRef = useRef<HTMLDivElement>(null);
 
   // テキストの幅を計算して適切なフォントサイズを決定する関数
   const getOptimalFontSize = (text: string, baseFontSize: number, maxWidth: number = 280) => {
@@ -462,6 +464,16 @@ export default function Home() {
   const foilOptions = ['なし', '金箔', '銀箔', 'スミ（黒）'];
 
       // 紙色データを取得
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (paperDropdownRef.current && !paperDropdownRef.current.contains(event.target as Node)) {
+        setIsPaperDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
 
@@ -1129,117 +1141,113 @@ export default function Home() {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               用紙
             </label>
-            <select
-              value={selectedPaper}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedPaper(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              {/* カテゴリ別にグループ化（改良版） */}
-              {(() => {
-                // 紙をより適切にカテゴリ分けする関数
-                const getCategoryAndDisplayName = (paper: PaperColor) => {
-                  const name = paper.name;
-                  
-                  // レザック66シリーズ
-                  if (name.includes('レザック66')) {
-                    return {
-                      category: 'レザック66シリーズ',
-                      displayName: name.replace(/レザック66\s*/, '').replace(/\s*\(.*?\)\s*$/, '')
-                    };
-                  }
-                  // レザック80つむぎシリーズ
-                  else if (name.includes('レザック80つむぎ')) {
-                    return {
-                      category: 'レザック80つむぎシリーズ',
-                      displayName: name.replace(/レザック80つむぎ\s*/, '').replace(/\s*\(.*?\)\s*$/, '')
-                    };
-                  }
-                  // レザック80つきシリーズ
-                  else if (name.includes('レザック80つき')) {
-                    return {
-                      category: 'レザック80つきシリーズ',
-                      displayName: name.replace(/レザック80つき\s*/, '').replace(/\s*\(.*?\)\s*$/, '')
-                    };
-                  }
-                  // レザック82ろうけつシリーズ
-                  else if (name.includes('レザック82ろうけつ')) {
-                    return {
-                      category: 'レザック82ろうけつシリーズ',
-                      displayName: name.replace(/レザック82ろうけつ\s*/, '').replace(/\s*\(.*?\)\s*$/, '')
-                    };
-                  }
-                  // NTシリーズ
-                  else if (name.includes('NT')) {
-                    return {
-                      category: 'NTシリーズ',
-                      displayName: name.replace(/\s*\(.*?\)\s*$/, '')
-                    };
-                  }
-                  // みやぎぬシリーズ
-                  else if (name.includes('みやぎぬ')) {
-                    return {
-                      category: 'みやぎぬシリーズ',
-                      displayName: name.replace(/\s*\(.*?\)\s*$/, '')
-                    };
-                  }
-                  // その他のレザックシリーズ
-                  else if (name.includes('レザック')) {
-                    return {
-                      category: 'その他レザックシリーズ',
-                      displayName: name.replace(/\s*\(.*?\)\s*$/, '')
-                    };
-                  }
-                  // デフォルト
-                  else {
-                    return {
-                      category: paper.brand || 'その他',
-                      displayName: name.replace(/\s*\(.*?\)\s*$/, '')
-                    };
-                  }
-                };
+            {/* カスタム用紙ドロップダウン（カラーサンプル付き） */}
+            {(() => {
+              const getCategoryAndDisplayName = (paper: PaperColor) => {
+                const name = paper.name;
+                if (name.includes('レザック66')) {
+                  return { category: 'レザック66シリーズ', displayName: name.replace(/レザック66\s*/, '').replace(/\s*\(.*?\)\s*$/, '') };
+                } else if (name.includes('レザック80つむぎ')) {
+                  return { category: 'レザック80つむぎシリーズ', displayName: name.replace(/レザック80つむぎ\s*/, '').replace(/\s*\(.*?\)\s*$/, '') };
+                } else if (name.includes('レザック80つき')) {
+                  return { category: 'レザック80つきシリーズ', displayName: name.replace(/レザック80つき\s*/, '').replace(/\s*\(.*?\)\s*$/, '') };
+                } else if (name.includes('レザック82ろうけつ')) {
+                  return { category: 'レザック82ろうけつシリーズ', displayName: name.replace(/レザック82ろうけつ\s*/, '').replace(/\s*\(.*?\)\s*$/, '') };
+                } else if (name.includes('NT')) {
+                  return { category: 'NTシリーズ', displayName: name.replace(/\s*\(.*?\)\s*$/, '') };
+                } else if (name.includes('みやぎぬ')) {
+                  return { category: 'みやぎぬシリーズ', displayName: name.replace(/\s*\(.*?\)\s*$/, '') };
+                } else if (name.includes('レザック')) {
+                  return { category: 'その他レザックシリーズ', displayName: name.replace(/\s*\(.*?\)\s*$/, '') };
+                } else {
+                  return { category: paper.brand || 'その他', displayName: name.replace(/\s*\(.*?\)\s*$/, '') };
+                }
+              };
 
-                // カテゴリ別にグループ化
-                const groups = papers.reduce((acc: Record<string, (PaperColor & { displayName: string })[]>, paper) => {
-                  const { category, displayName } = getCategoryAndDisplayName(paper);
-                  if (!acc[category]) acc[category] = [];
-                  acc[category].push({ ...paper, displayName });
-                  return acc;
-                }, {});
+              const groups = papers.reduce((acc: Record<string, (PaperColor & { displayName: string })[]>, paper) => {
+                const { category, displayName } = getCategoryAndDisplayName(paper);
+                if (!acc[category]) acc[category] = [];
+                acc[category].push({ ...paper, displayName });
+                return acc;
+              }, {});
 
-                // カテゴリの順序を定義
-                const categoryOrder = [
-                  'レザック66シリーズ',
-                  'レザック80つむぎシリーズ',
-                  'レザック80つきシリーズ',
-                  'レザック82ろうけつシリーズ',
-                  'その他レザックシリーズ',
-                  'NTシリーズ',
-                  'みやぎぬシリーズ',
-                  'その他'
-                ];
+              const categoryOrder = [
+                'レザック66シリーズ', 'レザック80つむぎシリーズ', 'レザック80つきシリーズ',
+                'レザック82ろうけつシリーズ', 'その他レザックシリーズ', 'NTシリーズ', 'みやぎぬシリーズ', 'その他'
+              ];
 
-                // 順序に従ってソート
-                const sortedCategories = Object.keys(groups).sort((a, b) => {
-                  const indexA = categoryOrder.indexOf(a);
-                  const indexB = categoryOrder.indexOf(b);
-                  const orderA = indexA === -1 ? 999 : indexA;
-                  const orderB = indexB === -1 ? 999 : indexB;
-                  return orderA - orderB;
-                });
+              const sortedCategories = Object.keys(groups).sort((a, b) => {
+                const orderA = categoryOrder.indexOf(a) === -1 ? 999 : categoryOrder.indexOf(a);
+                const orderB = categoryOrder.indexOf(b) === -1 ? 999 : categoryOrder.indexOf(b);
+                return orderA - orderB;
+              });
 
-                return sortedCategories.map(category => (
-                  <optgroup key={category} label={`━━ ${category} ━━`}>
-                    {groups[category]
-                      .sort((a, b) => a.displayName.localeCompare(b.displayName, 'ja'))
-                      .map((paper) => (
-                        <option key={paper.name} value={paper.name}>
-                          {paper.displayName}
-                        </option>
+              const selectedDisplayName = selectedPaperData
+                ? getCategoryAndDisplayName(selectedPaperData).displayName
+                : selectedPaper;
+
+              return (
+                <div ref={paperDropdownRef} className="relative">
+                  {/* トリガーボタン */}
+                  <button
+                    type="button"
+                    onClick={() => setIsPaperDropdownOpen(prev => !prev)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white flex items-center justify-between text-sm"
+                  >
+                    <span className="flex items-center gap-2 min-w-0">
+                      <span
+                        className="w-5 h-5 rounded border border-gray-300 flex-shrink-0 relative overflow-hidden"
+                        style={{ backgroundColor: selectedPaperData?.hex || '#ffffff' }}
+                      >
+                        {selectedPaperData?.localImageUrl && (
+                          <img src={selectedPaperData.localImageUrl} alt="" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                        )}
+                      </span>
+                      <span className="truncate">{selectedDisplayName || '選択してください'}</span>
+                    </span>
+                    <svg className={`w-4 h-4 flex-shrink-0 ml-1 text-gray-500 transition-transform ${isPaperDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {/* ドロップダウンリスト */}
+                  {isPaperDropdownOpen && (
+                    <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-72 overflow-y-auto">
+                      {sortedCategories.map(category => (
+                        <div key={category}>
+                          <div className="px-3 py-1 text-xs font-semibold text-gray-500 bg-gray-50 sticky top-0 border-b border-gray-200">
+                            {category}
+                          </div>
+                          {groups[category]
+                            .sort((a, b) => a.displayName.localeCompare(b.displayName, 'ja'))
+                            .map((paper) => (
+                              <button
+                                key={paper.name}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedPaper(paper.name);
+                                  setIsPaperDropdownOpen(false);
+                                }}
+                                className={`w-full px-3 py-2 flex items-center justify-between text-sm hover:bg-blue-50 transition-colors ${selectedPaper === paper.name ? 'bg-blue-50 text-blue-700' : 'text-gray-800'}`}
+                              >
+                                <span className="truncate">{paper.displayName}</span>
+                                <span
+                                  className="w-6 h-6 rounded border border-gray-300 flex-shrink-0 ml-2 relative overflow-hidden"
+                                  style={{ backgroundColor: paper.hex || '#ffffff' }}
+                                >
+                                  {paper.localImageUrl && (
+                                    <img src={paper.localImageUrl} alt="" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                                  )}
+                                </span>
+                              </button>
+                            ))}
+                        </div>
                       ))}
-                  </optgroup>
-                ));
-              })()}
-            </select>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
             
             {/* 色プレビュー */}
             {selectedPaper && (
