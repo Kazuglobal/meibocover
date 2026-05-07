@@ -295,19 +295,19 @@ export default function Home() {
       console.log(`プレビューサイズ: ${originalWidth}x${originalHeight}`);
 
       // html2canvasでプレビューをキャプチャ（高解像度）
+      // 注: width/heightとscaleは同時に指定すると問題が生じるため、scaleのみを使用
       const options = {
         useCORS: true,
         allowTaint: true,
         scale,
-        width: originalWidth,
-        height: originalHeight,
-        logging: false,
+        logging: true,
         backgroundColor: null,
         onclone: (clonedDoc: Document) => {
           // クローンされたドキュメント内の画像のCORSを処理
           const images = clonedDoc.querySelectorAll('img');
           images.forEach((img: HTMLImageElement) => {
             img.crossOrigin = 'anonymous';
+            img.src = img.src; // 強制的に画像を再読み込み
           });
 
           // 高DPI表示のためのスタイル調整
@@ -325,15 +325,19 @@ export default function Home() {
         useCORS: boolean;
         allowTaint: boolean;
         scale: number;
-        width: number;
-        height: number;
         logging: boolean;
         backgroundColor: string | null;
         onclone: (clonedDoc: Document) => void;
       }>;
 
       console.log('html2canvas開始');
-      const canvas: HTMLCanvasElement = await html2canvas(previewElement, options);
+      let canvas: HTMLCanvasElement;
+      try {
+        canvas = await html2canvas(previewElement, options);
+      } catch (html2canvasError) {
+        console.error('html2canvas失敗:', html2canvasError);
+        throw new Error(`html2canvas キャプチャ失敗: ${html2canvasError instanceof Error ? html2canvasError.message : String(html2canvasError)}`);
+      }
       console.log(`キャンバス生成完了: ${canvas.width}x${canvas.height}`);
 
       // PDFドキュメントを作成（A4サイズ、高解像度）
@@ -457,7 +461,41 @@ export default function Home() {
 
       // PDFをダウンロード
       console.log(`PDFダウンロード開始: ${filename}`);
-      pdf.save(filename);
+
+      // pdf.save()を使用してダウンロードを試みる
+      try {
+        // 新しいjsPDFではsave()の戻り値を使用する必要がある場合がある
+        const result = pdf.save(filename);
+        console.log('pdf.save() 実行完了');
+
+        // フォールバック: 明示的なダウンロード処理
+        // もしsave()が機能しない場合のバックアップ
+        if (!result && typeof window !== 'undefined') {
+          const pdfBlob = pdf.output('blob') as Blob;
+          const url = window.URL.createObjectURL(pdfBlob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+          console.log('フォールバック: blob ダウンロード実行');
+        }
+      } catch (downloadError) {
+        console.error('pdf.save() エラー、フォールバック実行:', downloadError);
+        // フォールバック: blobを使用したダウンロード
+        const pdfBlob = pdf.output('blob') as Blob;
+        const url = window.URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        console.log('フォールバック: blob ダウンロード実行（エラー後）');
+      }
       console.log('PDF生成・ダウンロード完了');
     } catch (error) {
       console.error('PDF生成エラー詳細:', error);
