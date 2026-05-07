@@ -286,10 +286,13 @@ export default function Home() {
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
     try {
+      console.log('PDF生成開始');
+
       // 高品質キャプチャのためにスケール調整
       const scale = 3; // 3倍の解像度でキャプチャ
       const originalWidth = previewElement.offsetWidth;
       const originalHeight = previewElement.offsetHeight;
+      console.log(`プレビューサイズ: ${originalWidth}x${originalHeight}`);
 
       // html2canvasでプレビューをキャプチャ（高解像度）
       const options = {
@@ -306,7 +309,7 @@ export default function Home() {
           images.forEach((img: HTMLImageElement) => {
             img.crossOrigin = 'anonymous';
           });
-          
+
           // 高DPI表示のためのスタイル調整
           const style = clonedDoc.createElement('style');
           style.textContent = `
@@ -328,46 +331,55 @@ export default function Home() {
         backgroundColor: string | null;
         onclone: (clonedDoc: Document) => void;
       }>;
-      
+
+      console.log('html2canvas開始');
       const canvas: HTMLCanvasElement = await html2canvas(previewElement, options);
+      console.log(`キャンバス生成完了: ${canvas.width}x${canvas.height}`);
 
       // PDFドキュメントを作成（A4サイズ、高解像度）
+      console.log('jsPDF初期化');
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
         format: 'a4',
         compress: false // 高品質のため圧縮を無効化
       });
+      console.log('PDF作成完了');
 
       // 高品質画像データを取得
+      console.log('png画像データ取得開始');
       const imgData = canvas.toDataURL('image/png', 1.0); // 最高品質
-      
+      console.log(`画像データ取得完了: ${imgData.length}バイト`);
+
       // A4サイズに合わせて表紙のサイズを計算
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-      
+
       // 表紙のアスペクト比を維持（高解像度キャンバスサイズを考慮）
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
       const ratio = Math.min(pdfWidth / (imgWidth / scale), pdfHeight / (imgHeight / scale));
-      
+
       const scaledWidth = (imgWidth / scale) * ratio;
       const scaledHeight = (imgHeight / scale) * ratio;
-      
+
       // 中央配置
       const x = (pdfWidth - scaledWidth) / 2;
       const y = (pdfHeight - scaledHeight) / 2;
 
       // PDFに高解像度画像を追加
+      console.log('1ページ目追加');
       pdf.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight, '', 'NONE');
+      console.log('1ページ目完了');
 
       // 2ページ目に仕様情報を追加（Canvas使用で日本語対応）
       pdf.addPage();
-      
+
       // 生成日時
       const now = new Date();
-      
+
       // 仕様情報用のCanvasを作成（高解像度）
+      console.log('仕様ページ生成開始');
       const specCanvas = document.createElement('canvas');
       const specScale = 2; // 仕様ページも高解像度化
       const specLogicalWidth = 600;
@@ -384,23 +396,23 @@ export default function Home() {
         // 背景を白に設定
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, specLogicalWidth, specLogicalHeight);
-        
+
         // 日本語フォントを設定
         ctx.fillStyle = 'black';
-        
+
         // タイトル
         ctx.font = '24px "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif';
         ctx.fillText('表紙デザイン仕様', 30, 50);
-        
+
         // 用紙情報
         ctx.font = '18px "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif';
         ctx.fillText('用紙:', 30, 100);
         ctx.fillText(selectedPaper, 80, 100);
-        
+
         // 箔押し情報
         ctx.fillText('箔押し:', 30, 130);
         ctx.fillText(selectedFoil, 100, 130);
-        
+
         // テキスト要素
         ctx.fillText('テキスト要素:', 30, 170);
         let yPos = 200;
@@ -412,7 +424,7 @@ export default function Home() {
           ctx.fillText(`   サイズ: ${element.size}px`, 40, yPos + 40);
           yPos += 70;
         });
-        
+
         // ロゴ情報
         if (logoElements.length > 0) {
           ctx.font = '18px "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif';
@@ -426,26 +438,31 @@ export default function Home() {
             yPos += 50;
           });
         }
-        
+
         // 生成日時
         ctx.font = '12px "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif';
         ctx.fillText(`生成日時: ${now.toLocaleString('ja-JP')}`, 30, specLogicalHeight - 30);
-        
+
         // CanvasをPDFに追加
         const specImgData = specCanvas.toDataURL('image/png');
+        console.log(`仕様ページ画像データ取得完了: ${specImgData.length}バイト`);
         const specPdfWidth = pdf.internal.pageSize.getWidth();
         const specPdfHeight = pdf.internal.pageSize.getHeight();
         pdf.addImage(specImgData, 'PNG', 0, 0, specPdfWidth, specPdfHeight);
+        console.log('2ページ目完了');
       }
 
       // ファイル名を生成（現在の日時）
       const filename = `表紙プレビュー_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}.pdf`;
 
       // PDFをダウンロード
+      console.log(`PDFダウンロード開始: ${filename}`);
       pdf.save(filename);
+      console.log('PDF生成・ダウンロード完了');
     } catch (error) {
-      console.error('PDF生成エラー:', error);
-      alert('PDF生成中にエラーが発生しました');
+      console.error('PDF生成エラー詳細:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      alert(`PDF生成中にエラーが発生しました:\n${errorMessage}`);
     } finally {
       previewElement.classList.remove('exporting');
     }
