@@ -302,9 +302,35 @@ export default function Home() {
         logging: false,
         backgroundColor: null,
         onclone: (clonedDoc: Document) => {
+          // html2canvas は oklch() カラー関数を解析できないため、
+          // ブラウザが算出した rgb 値をインラインスタイルとして先に適用し、
+          // <style> タグ内に残る oklch() を transparent に置換する
+          const win = clonedDoc.defaultView ?? window;
+          clonedDoc.querySelectorAll<HTMLElement>('*').forEach((el) => {
+            try {
+              const cs = win.getComputedStyle(el);
+              [
+                'color', 'background-color',
+                'border-top-color', 'border-right-color',
+                'border-bottom-color', 'border-left-color',
+                'outline-color',
+              ].forEach((prop) => {
+                const val = cs.getPropertyValue(prop);
+                if (val) el.style.setProperty(prop, val);
+              });
+            } catch {
+              // 要素ごとのエラーは無視
+            }
+          });
+
+          clonedDoc.querySelectorAll<HTMLStyleElement>('style').forEach((styleEl) => {
+            if (styleEl.textContent?.includes('oklch')) {
+              styleEl.textContent = styleEl.textContent.replace(/oklch\([^)]*\)/g, 'transparent');
+            }
+          });
+
           // クローンされたドキュメント内の画像のCORSを処理
-          const images = clonedDoc.querySelectorAll('img');
-          images.forEach((img: HTMLImageElement) => {
+          clonedDoc.querySelectorAll('img').forEach((img: HTMLImageElement) => {
             img.crossOrigin = 'anonymous';
           });
 
