@@ -318,6 +318,15 @@ export default function Home() {
                 const val = cs.getPropertyValue(prop);
                 if (val) el.style.setProperty(prop, val);
               });
+              // box-shadow: Tailwind v4 の ring ユーティリティが oklch を使うため個別処理
+              // 選択中要素の ring クラス（ring-2 ring-blue-400 等）が box-shadow に
+              // oklch() を含むと html2canvas がパースできずエラーになる
+              const boxShadow = cs.getPropertyValue('box-shadow');
+              if (boxShadow && boxShadow.includes('oklch')) {
+                el.style.setProperty('box-shadow', 'none');
+              } else if (boxShadow && boxShadow !== 'none') {
+                el.style.setProperty('box-shadow', boxShadow);
+              }
             } catch {
               // 要素ごとのエラーは無視
             }
