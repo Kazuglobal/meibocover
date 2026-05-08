@@ -282,6 +282,31 @@ export default function Home() {
       return;
     }
 
+    // iOS Safari は async 処理を挟むと <a download> や window.open() が
+    // ユーザージェスチャーから外れて無視されダウンロードが起動しない。
+    // 押下直後に同期で空タブを確保しておき、PDF 完成後にそのタブへ
+    // blob URL を流し込むのが定番回避策。
+    const isIOS =
+      typeof navigator !== 'undefined' &&
+      /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+      !(window as unknown as { MSStream?: unknown }).MSStream;
+    let iosPdfWindow: Window | null = null;
+    if (isIOS) {
+      iosPdfWindow = window.open('', '_blank');
+      if (iosPdfWindow) {
+        try {
+          iosPdfWindow.document.write(
+            '<!doctype html><meta charset="utf-8"><title>PDFを生成中…</title>' +
+            '<body style="margin:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;color:#555;background:#fafafa;">' +
+            '<div style="text-align:center;padding:24px;">PDFを生成しています…<br><span style="font-size:13px;color:#888;">完了するとここにPDFが表示されます。</span></div>' +
+            '</body>'
+          );
+        } catch {
+          // about:blank への document.write がブロックされる環境では無視
+        }
+      }
+    }
+
     previewElement.classList.add('exporting');
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
@@ -561,25 +586,45 @@ export default function Home() {
       // PDFをダウンロード
       console.log(`PDFダウンロード開始: ${filename}`);
 
-      // より信頼性の高いblob方式を使用してダウンロード
       try {
         const pdfBlob = pdf.output('blob') as Blob;
         const url = URL.createObjectURL(pdfBlob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
 
-        // URLオブジェクトの解放
-        setTimeout(() => {
-          URL.revokeObjectURL(url);
-        }, 100);
-
-        console.log('PDF blob ダウンロード完了');
+        if (iosPdfWindow && !iosPdfWindow.closed) {
+          // iOS Safari: 押下時に確保した新規タブへ blob URL を流し込み、
+          // PDF をインライン表示させる。ユーザーは共有シートから保存可能。
+          try {
+            iosPdfWindow.location.href = url;
+          } catch (navError) {
+            console.error('iOS 用ウィンドウのナビゲーションに失敗:', navError);
+            try { iosPdfWindow.close(); } catch { /* ignore */ }
+            // 最後の手段として現タブを PDF に遷移させる
+            window.location.href = url;
+          }
+          // iOS では PDF を読み込みきる前に revoke すると失敗するため長めに保持
+          setTimeout(() => URL.revokeObjectURL(url), 60_000);
+          console.log('iOS Safari: 新規タブで PDF を表示');
+        } else if (isIOS) {
+          // 押下直後の window.open がポップアップブロッカーで失敗していた場合のフォールバック。
+          // 現タブを PDF に遷移させる（戻るボタンで元の編集画面に戻れる）。
+          window.location.href = url;
+          setTimeout(() => URL.revokeObjectURL(url), 60_000);
+          console.log('iOS Safari: 現タブで PDF を表示（フォールバック）');
+        } else {
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setTimeout(() => URL.revokeObjectURL(url), 100);
+          console.log('PDF blob ダウンロード完了');
+        }
       } catch (blobError) {
         console.error('blob方式 ダウンロード失敗、pdf.save() を試行:', blobError);
+        if (iosPdfWindow && !iosPdfWindow.closed) {
+          try { iosPdfWindow.close(); } catch { /* ignore */ }
+        }
         // フォールバック: pdf.save()を使用
         try {
           pdf.save(filename);
@@ -592,6 +637,10 @@ export default function Home() {
       console.log('PDF生成・ダウンロード完了');
     } catch (error) {
       console.error('PDF生成エラー詳細:', error);
+      // 失敗時は iOS 用に開いた空タブを閉じる
+      if (iosPdfWindow && !iosPdfWindow.closed) {
+        try { iosPdfWindow.close(); } catch { /* ignore */ }
+      }
       const errorMessage = error instanceof Error ? error.message : String(error);
       alert(`PDF生成中にエラーが発生しました:\n${errorMessage}`);
     } finally {
