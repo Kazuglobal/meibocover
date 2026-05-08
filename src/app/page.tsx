@@ -302,39 +302,105 @@ export default function Home() {
         logging: false,
         backgroundColor: null,
         onclone: (clonedDoc: Document) => {
-          // html2canvas は oklch() カラー関数を解析できないため、
-          // ブラウザが算出した rgb 値をインラインスタイルとして先に適用し、
-          // <style> タグ内に残る oklch() を transparent に置換する
+          // html2canvas 1.x は oklch() を解析できないため、Tailwind v4 が出力する
+          // oklch カラーを事前に rgb/hex に変換してからキャプチャする。
+          //
+          // 重要: 最近のブラウザ (Chrome 111+, Safari 15.4+, Firefox 113+) では
+          // getComputedStyle が値を元の色空間 (oklch) のまま返すため、
+          // 単にインラインスタイルへコピーしても oklch のままになる。
+          // canvas 2D の fillStyle は「設定した色を hex/rgba にシリアライズして返す」
+          // という仕様 (HTML Living Standard) を持つので、これをコンバータとして使う。
           const win = clonedDoc.defaultView ?? window;
+          const conversionCtx = clonedDoc.createElement('canvas').getContext('2d');
+          const colorCache = new Map<string, string>();
+
+          const convertColor = (value: string): string => {
+            const trimmed = value.trim();
+            if (!trimmed) return trimmed;
+            const cached = colorCache.get(trimmed);
+            if (cached !== undefined) return cached;
+            if (!conversionCtx) return trimmed;
+            try {
+              // 直前の値が残らないように一旦リセット
+              conversionCtx.fillStyle = '#000000';
+              conversionCtx.fillStyle = trimmed;
+              const result = conversionCtx.fillStyle as string;
+              colorCache.set(trimmed, result);
+              return result;
+            } catch {
+              colorCache.set(trimmed, trimmed);
+              return trimmed;
+            }
+          };
+
+          // gradient / box-shadow / background など複合値の中の oklch(...) を個別変換する
+          const replaceOklchTokens = (value: string): string => {
+            if (!value || !value.includes('oklch')) return value;
+            return value.replace(/oklch\([^()]*\)/g, (match) => {
+              const converted = convertColor(match);
+              // 変換に失敗（依然として oklch を含む）した場合は transparent にフォールバック
+              return converted.includes('oklch') ? 'transparent' : converted;
+            });
+          };
+
+          const SOLID_COLOR_PROPS = [
+            'color',
+            'background-color',
+            'border-top-color',
+            'border-right-color',
+            'border-bottom-color',
+            'border-left-color',
+            'outline-color',
+            'text-decoration-color',
+            'caret-color',
+            'accent-color',
+            'column-rule-color',
+            'fill',
+            'stroke',
+          ];
+
+          const COMPOSITE_PROPS = [
+            'background-image',
+            'box-shadow',
+            'border-image-source',
+            'mask-image',
+            '-webkit-mask-image',
+          ];
+
           clonedDoc.querySelectorAll<HTMLElement>('*').forEach((el) => {
             try {
               const cs = win.getComputedStyle(el);
-              [
-                'color', 'background-color',
-                'border-top-color', 'border-right-color',
-                'border-bottom-color', 'border-left-color',
-                'outline-color',
-              ].forEach((prop) => {
+
+              SOLID_COLOR_PROPS.forEach((prop) => {
                 const val = cs.getPropertyValue(prop);
-                if (val) el.style.setProperty(prop, val);
+                if (val && val.includes('oklch')) {
+                  el.style.setProperty(prop, convertColor(val));
+                }
               });
-              // box-shadow: Tailwind v4 の ring ユーティリティが oklch を使うため個別処理
-              // 選択中要素の ring クラス（ring-2 ring-blue-400 等）が box-shadow に
-              // oklch() を含むと html2canvas がパースできずエラーになる
-              const boxShadow = cs.getPropertyValue('box-shadow');
-              if (boxShadow && boxShadow.includes('oklch')) {
-                el.style.setProperty('box-shadow', 'none');
-              } else if (boxShadow && boxShadow !== 'none') {
-                el.style.setProperty('box-shadow', boxShadow);
-              }
+
+              COMPOSITE_PROPS.forEach((prop) => {
+                const val = cs.getPropertyValue(prop);
+                if (val && val.includes('oklch')) {
+                  el.style.setProperty(prop, replaceOklchTokens(val));
+                }
+              });
             } catch {
               // 要素ごとのエラーは無視
             }
           });
 
+          // <style> タグ内に残った oklch() （CSS 変数の定義など）も hex に置換しておく
           clonedDoc.querySelectorAll<HTMLStyleElement>('style').forEach((styleEl) => {
             if (styleEl.textContent?.includes('oklch')) {
-              styleEl.textContent = styleEl.textContent.replace(/oklch\([^)]*\)/g, 'transparent');
+              styleEl.textContent = replaceOklchTokens(styleEl.textContent);
+            }
+          });
+
+          // インラインの style 属性にも oklch が含まれることがあるため変換しておく
+          clonedDoc.querySelectorAll<HTMLElement>('[style*="oklch"]').forEach((el) => {
+            const styleAttr = el.getAttribute('style');
+            if (styleAttr) {
+              el.setAttribute('style', replaceOklchTokens(styleAttr));
             }
           });
 
