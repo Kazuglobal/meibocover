@@ -302,10 +302,26 @@ export default function Home() {
         logging: false,
         backgroundColor: null,
         onclone: (clonedDoc: Document) => {
-          // html2canvas は oklch() カラー関数を解析できないため、
-          // ブラウザが算出した rgb 値をインラインスタイルとして先に適用し、
-          // <style> タグ内に残る oklch() を transparent に置換する
+          // html2canvas は oklch() カラー関数を未対応のため、
+          // Canvas の fillStyle を使って oklch → rgb に変換してからインラインスタイルへ適用する
           const win = clonedDoc.defaultView ?? window;
+
+          // oklch を rgb に変換するヘルパー（Canvas の色正規化を利用）
+          const colorHelperCanvas = document.createElement('canvas');
+          colorHelperCanvas.width = 1;
+          colorHelperCanvas.height = 1;
+          const colorHelperCtx = colorHelperCanvas.getContext('2d');
+          const resolveColor = (value: string): string => {
+            if (!colorHelperCtx || !value.includes('oklch')) return value;
+            try {
+              colorHelperCtx.fillStyle = 'rgba(0,0,0,0)';
+              colorHelperCtx.fillStyle = value;
+              return colorHelperCtx.fillStyle; // ブラウザが rgb() に正規化して返す
+            } catch {
+              return 'transparent';
+            }
+          };
+
           clonedDoc.querySelectorAll<HTMLElement>('*').forEach((el) => {
             try {
               const cs = win.getComputedStyle(el);
@@ -316,11 +332,10 @@ export default function Home() {
                 'outline-color',
               ].forEach((prop) => {
                 const val = cs.getPropertyValue(prop);
-                if (val) el.style.setProperty(prop, val);
+                if (val) el.style.setProperty(prop, resolveColor(val));
               });
-              // box-shadow: Tailwind v4 の ring ユーティリティが oklch を使うため個別処理
-              // 選択中要素の ring クラス（ring-2 ring-blue-400 等）が box-shadow に
-              // oklch() を含むと html2canvas がパースできずエラーになる
+              // box-shadow は oklch を含む複合値のため Canvas 変換が難しい
+              // 選択リング（ring-2 ring-blue-400 等）はPDFに不要なので none に落とす
               const boxShadow = cs.getPropertyValue('box-shadow');
               if (boxShadow && boxShadow.includes('oklch')) {
                 el.style.setProperty('box-shadow', 'none');
@@ -332,6 +347,7 @@ export default function Home() {
             }
           });
 
+          // <style> タグ内に残る oklch を transparent に置換（二重対策）
           clonedDoc.querySelectorAll<HTMLStyleElement>('style').forEach((styleEl) => {
             if (styleEl.textContent?.includes('oklch')) {
               styleEl.textContent = styleEl.textContent.replace(/oklch\([^)]*\)/g, 'transparent');
